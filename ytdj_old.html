@@ -1,0 +1,15 @@
+<input type="text" id="uri1"> </input><button id="b1">go</button> <br>
+<iframe width="560" height="315" id='v1' src="" frameborder="0" allowfullscreen></iframe><br>
+<input type="text" id="uri2"> </input> <button id="b2">go</button><br>
+<iframe width="560" height="315" id="v2" src="" frameborder="0" allowfullscreen></iframe>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#b1').click(function () {
+      $('#v1').attr("src", "https://www.youtube.com/embed/" + $('#uri1').val());
+    });
+    $('#b2').click(function () {
+      $('#v2').attr("src", "https://www.youtube.com/embed/" + $('#uri2').val());
+    });
+  });
+</script>
