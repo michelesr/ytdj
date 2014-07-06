@@ -1,9 +1,18 @@
 body {
   background-color: #eee;
+  font-family: helvetica;
 }
 
 h1 {
   text-align: center;
-  font-family: helvetica;
   color: #333
+}
+
+.player {
+  display: inline-block;
+  background-color: #ede;
+}
+
+.footer {
+  background-color: #ede;
 }
