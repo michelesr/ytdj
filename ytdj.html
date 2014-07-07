@@ -2,7 +2,9 @@
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="simple-slider.min.js"></script>
     <script src="players.js"></script>
+    <link href="simple-slider-volume.css" rel="stylesheet" type="text/css" />
     <title>Youtube DJ Player - YTDJ</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
@@ -18,7 +20,7 @@
         <div id="player2"></div><br>
     </div>
     <div class="fader">
-        <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="range" min="0" max="100" step="1" value="0"></input>
+        <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,100" min="0" data-slider-step="1" data-slider-theme="volume"></input>
     </div>
     <div class="footer">
         <p>Mainteined by michelesr. Get the <a href="https://github.com/michelesr/ytdj/"/>source code!</a></p>
