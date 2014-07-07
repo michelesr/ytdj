@@ -19,8 +19,8 @@
         <p> Video #2 </p><input value="Insert video ID" type="text" id="id2"> </input><button id="b2">Load</button> <br><br>
         <div id="player2"></div><br>
     </div>
-    <div class="fader" >
-        <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,100" min="0" data-slider-step="1" data-slider-theme="volume"></input>
+    <div class="faderDiv">
+        <p>Use the fader to <b>mix</b>!</p></p><input id="fader"  type="text" data-slider="true" data-slider-range="0,100" min="0" data-slider-step="1" data-slider-theme="volume"></input>
         <p id="vol">0-100</p>
     </div>
     <div class="footer">
@@ -28,18 +28,21 @@
     <p>Project <a href="https://michelesr.github.io/ytdj/">page</a>. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
     </div>
     <script>
+      var hover = false;
       function whatIsId() { 
         alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
       }
       function onKeyDown(k) {
         var currentValue = parseInt($('#fader').val());
-        switch(k.keyCode? k.keyCode: k.charCode) {
-          case 37:
-            $('#fader').simpleSlider("setValue", currentValue - 1);
-            break;
-          case 39:
-            $('#fader').simpleSlider("setValue", currentValue + 1);
-            break;
+        if (hover) {
+          switch(k.keyCode? k.keyCode: k.charCode) {
+            case 37:
+              $('#fader').simpleSlider("setValue", currentValue - 1);
+              break;
+            case 39:
+              $('#fader').simpleSlider("setValue", currentValue + 1);
+              break;
+          }
         }
       }
       $(document).ready(function() {
@@ -53,6 +56,12 @@
           $('#vol').html((100 - $('#fader').val()) + "-" + $('#fader').val());
           player.setVolume(100 - $('#fader').val());
           player2.setVolume($('#fader').val());
+        });
+        $('.faderDiv').hover(function () {
+          console.log("hover");
+          hover = true;
+        }, function() {
+          hover = false;
         });
       });
     </script>
