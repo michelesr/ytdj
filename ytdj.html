@@ -21,6 +21,7 @@
     </div>
     <div class="fader">
         <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,100" min="0" data-slider-step="1" data-slider-theme="volume"></input>
+        <p id="vol">0-100</p>
     </div>
     <div class="footer">
         <p>Mainteined by michelesr. Get the <a href="https://github.com/michelesr/ytdj/"/>source code!</a></p>
@@ -36,6 +37,7 @@
           player2.loadVideoById($("#id2").val());
         });
         $('#fader').change(function () {
+          $('#vol').html((100 - $('#fader').val()) + "-" + $('#fader').val());
           player.setVolume(100 - $('#fader').val());
           player2.setVolume($('#fader').val());
         });
