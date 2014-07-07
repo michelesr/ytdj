@@ -8,18 +8,18 @@
     <title>Youtube DJ Player - YTDJ</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body onkeydown="onKeyDown(event)">
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <h1>Youtube DJ Player</h1>
     <div class="player">
-        <p> Video #1 </p><input value="Insert video ID" type="text" id="id1"> </input><button id="b1">Load</button> <a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a> <br><br>
+        <p> Video #1 </p><input value="Insert video ID" type="text" id="id1" > </input><button id="b1">Load</button> <a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a> <br><br>
         <div id="player"></div><br>
     </div>
     <div class="player">
         <p> Video #2 </p><input value="Insert video ID" type="text" id="id2"> </input><button id="b2">Load</button> <br><br>
         <div id="player2"></div><br>
     </div>
-    <div class="fader">
+    <div class="fader" >
         <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,100" min="0" data-slider-step="1" data-slider-theme="volume"></input>
         <p id="vol">0-100</p>
     </div>
@@ -28,7 +28,20 @@
     <p>Project <a href="https://michelesr.github.io/ytdj/">page</a>. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
     </div>
     <script>
-      var whatIsId = function() { alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");}
+      function whatIsId() { 
+        alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
+      }
+      function onKeyDown(k) {
+        var currentValue = parseInt($('#fader').val());
+        switch(k.keyCode? k.keyCode: k.charCode) {
+          case 37:
+            $('#fader').simpleSlider("setValue", currentValue - 1);
+            break;
+          case 39:
+            $('#fader').simpleSlider("setValue", currentValue + 1);
+            break;
+        }
+      }
       $(document).ready(function() {
         $('#b1').click(function () {
           player.loadVideoById($("#id1").val());
