@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="simple-slider.min.js"></script>
-    <script src="players.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="simple-slider.min.js"></script>
+    <script type="text/javascript" src="players.js"></script>
+    <script type="text/javascript" src="ytdj.js"></script>
     <link href="simple-slider-volume.css" rel="stylesheet" type="text/css" />
     <title>Youtube DJ Player - YTDJ</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
@@ -21,61 +22,12 @@
         <div id="player2"></div><br>
     </div>
     <div class="faderDiv">
-        <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,100" min="0" data-slider-step="1" data-slider-theme="volume"></input>
-        <p id="vol">0-100</p>
+        <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,200" data-slider-step="1" data-slider-theme="volume"></input>
+        <p id="vol">100-0</p>
     </div>
     <div class="footer">
         <p>Mainteined by michelesr. Get the <a href="https://github.com/michelesr/ytdj/"/>source code!</a></p>
     <p>Project <a href="https://michelesr.github.io/ytdj/">page</a>. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
     </div>
-    <script>
-      var vol1 = 1;
-      var vol2 = 1;
-      var hover = false;
-      function whatIsId() { 
-        alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
-      }
-      function onKeyDown(k) {
-        var currentValue = parseInt($('#fader').val());
-        if (hover) {
-          switch(k.keyCode? k.keyCode: k.charCode) {
-            case 37:
-              $('#fader').simpleSlider("setValue", currentValue - 1);
-              break;
-            case 39:
-              $('#fader').simpleSlider("setValue", currentValue + 1);
-              break;
-          }
-        }
-      }
-      $(document).ready(function() {
-        $("#fader-slider").css("margin-left", "auto");
-        $("#fader-slider").css("margin-right", "auto");
-        $('#b1').click(function () {
-          player.loadVideoById($("#id1").val());
-        });
-        $('#b2').click(function () {
-          player2.loadVideoById($("#id2").val());
-        });
-        $('#fader').change(function () {
-          $('#vol').html((100 - $('#fader').val()) + "-" + $('#fader').val());
-          player.setVolume((100 - $('#fader').val()) * vol1);
-          player2.setVolume(($('#fader').val()) * vol2);
-        });
-        $('#vol1').change(function () {
-          vol1 = $('#vol1').val() / 100;
-          player.setVolume((100 - $('#fader').val()) * vol1);
-        });
-        $('#vol2').change(function () {
-          vol2 = $('#vol2').val() / 100;
-          player2.setVolume(($('#fader').val()) * vol2);
-        });
-        $('.faderDiv').hover(function () {
-          hover = true;
-        }, function() {
-          hover = false;
-        });
-      });
-    </script>
   </body>
 </html>
