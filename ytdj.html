@@ -11,12 +11,13 @@
   <body onkeydown="onKeyDown(event)">
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <h1>Youtube DJ Player</h1>
+    <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a></p>
     <div class="player">
-        <p> Video #1 </p><input value="Insert video ID" type="text" id="id1"> </input><button id="b1">Load</button> <a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a> <br><br>
+        <p><b>Video #1</b></p><input value="Insert video ID" type="text" id="id1"></input><button id="b1">Load</button> <br><input type="range" min="0" max="100" step="1" id="vol1" value="100"></input><br><br>
         <div id="player"></div><br>
     </div>
     <div class="player">
-        <p> Video #2 </p><input value="Insert video ID" type="text" id="id2"> </input><button id="b2">Load</button> <br><br>
+        <p><b>Video #2</b></p><input value="Insert video ID" type="text" id="id2"></input><button id="b2">Load</button><br><input type="range" min="0" max="100" step="1" id="vol2" value="100"></input><br><br>
         <div id="player2"></div><br>
     </div>
     <div class="faderDiv">
@@ -28,6 +29,8 @@
     <p>Project <a href="https://michelesr.github.io/ytdj/">page</a>. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
     </div>
     <script>
+      var vol1 = 1;
+      var vol2 = 1;
       var hover = false;
       function whatIsId() { 
         alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
@@ -56,8 +59,16 @@
         });
         $('#fader').change(function () {
           $('#vol').html((100 - $('#fader').val()) + "-" + $('#fader').val());
-          player.setVolume(100 - $('#fader').val());
-          player2.setVolume($('#fader').val());
+          player.setVolume((100 - $('#fader').val()) * vol1);
+          player2.setVolume(($('#fader').val()) * vol2);
+        });
+        $('#vol1').change(function () {
+          vol1 = $('#vol1').val() / 100;
+          player.setVolume((100 - $('#fader').val()) * vol1);
+        });
+        $('#vol2').change(function () {
+          vol2 = $('#vol2').val() / 100;
+          player2.setVolume(($('#fader').val()) * vol2);
         });
         $('.faderDiv').hover(function () {
           hover = true;
