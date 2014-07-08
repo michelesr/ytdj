@@ -12,6 +12,10 @@ function howToLoop() {
   alert("To loop a video, press the trigger key 3 times, first time to get start time, second time to get end time and start the loop, last time to release the loop.\nTrigger key is 'z' for first video and 'x' for second video");
 }
 
+function printControls() {
+  alert("Control Keys:\nleft/right: move the fader when mouse is near it\nz: loop trigger for video #1\nx: loop trigger for video #2\nh: hide/show the players");
+}
+
 function onKeyDown(k) {
   var currentValue = parseInt($('#fader').val());
   switch(k.keyCode? k.keyCode: k.charCode) {
@@ -26,8 +30,14 @@ function onKeyDown(k) {
     case 90: // z
       triggerLoop(0);
       break;
-    case 88:
+    case 88: // x
       triggerLoop(1);
+      break;
+    case 72: // h
+      if($(".players").is(":visible"))
+        hidePlayers();
+      else
+	showPlayers();
       break;
   }
 }
@@ -101,6 +111,14 @@ function triggerLoop(p) {
 
 function clearLoop(p) {
   window.clearInterval(loop[p].interval);
+}
+
+function hidePlayers() {
+  $(".players").fadeOut(500); 
+}
+
+function showPlayers() {
+  $(".players").fadeIn(500); 
 }
 
 $(document).ready(function() {
