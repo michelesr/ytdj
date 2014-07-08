@@ -12,7 +12,7 @@
   <body onkeydown="onKeyDown(event)">
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <h1>Youtube DJ Player</h1>
-    <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a></p>
+    <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a>  </p>
     <p id="loud" class="warning">Loud volume can generate audio distortion when you mix the videos!</p>
     <div class="player">
         <p><b>Video #1</b></p><input value="Insert video ID" type="text" id="id1"></input><button id="b1">Load</button> <br><input type="range" min="0" max="100" step="1" id="vol1" value="50"></input><br><br>
@@ -25,6 +25,7 @@
     <div class="faderDiv">
         <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,200" data-slider-step="1" data-slider-theme="volume"></input>
         <p id="vol">100-0</p>
+        <p><a id="mode" href="javascript:void(0)" onclick="changeMode()">Switch to 50-50</a></p>
     </div>
     <div class="footer">
         <p>Mainteined by michelesr. Get the <a href="https://github.com/michelesr/ytdj/"/>source code!</a></p>

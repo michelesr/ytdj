@@ -1,5 +1,6 @@
 var vol1 = 0.5;
 var vol2 = 0.5;
+var fiftyFifty = false;
 var hover = false;
 
 function whatIsId() { 
@@ -21,7 +22,7 @@ function onKeyDown(k) {
 }
 
 function checkVolume() {
-  if($("#vol1").val() > 50 || $("#vol2").val() > 50)
+  if($("#vol1").val() > 75 || $("#vol2").val() > 75)
     $("#loud").fadeIn(500);
   else
     $("#loud").fadeOut(500);
@@ -29,16 +30,34 @@ function checkVolume() {
 
 function updateVolume() {
     var fv = $("#fader").val();
-    if (fv <= 100) {
-      $('#vol').html("100-" + fv);
-      player.setVolume(100 * vol1);
-      player2.setVolume(fv * vol2);
+    if (!fiftyFifty) {
+      if (fv <= 100) {
+	$('#vol').html("100-" + fv);
+	player.setVolume(100 * vol1);
+	player2.setVolume(fv * vol2);
+      }
+      else {
+	$('#vol').html((200 - fv) + "-100");
+	player.setVolume((200 - fv) * vol1);
+	player2.setVolume(100 * vol2);
+      }
     }
     else {
-      $('#vol').html((200 - fv) + "-100");
-      player.setVolume((200 - fv) * vol1);
-      player2.setVolume(100 * vol2);
+      fv /= 2;
+      $('#vol').html((100 - fv) + "-" + fv);
+      player.setVolume((100 - fv) * vol1);
+      player2.setVolume(fv * vol2);
     }
+
+}
+
+function changeMode() {
+  fiftyFifty = fiftyFifty? false: true;
+  if (fiftyFifty)
+    $("#mode").html('Switch to 100-100');
+  else
+    $("#mode").html('Switch to 50-50');
+  updateVolume();
 }
 
 $(document).ready(function() {
