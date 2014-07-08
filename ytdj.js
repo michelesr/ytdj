@@ -1,5 +1,6 @@
 var vol1 = 0.5;
 var vol2 = 0.5;
+var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" : 0, "end" : 0 , "interval": 0, "state": "off"}];
 var fiftyFifty = false;
 var hover = false;
 
@@ -7,18 +8,28 @@ function whatIsId() {
   alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
 }
 
+function howToLoop() {
+  alert("To loop a video, press the trigger key 3 times, first time to get start time, second time to get end time and start the loop, last time to release the loop.\nTrigger key is 'z' for first video and 'x' for second video");
+}
+
 function onKeyDown(k) {
   var currentValue = parseInt($('#fader').val());
   switch(k.keyCode? k.keyCode: k.charCode) {
-    case 37:
+    case 37:  // left
       if (hover)
 	$('#fader').simpleSlider("setValue", currentValue - 1);
       break;
-    case 39:
+    case 39: // right
       if (hover)
 	$('#fader').simpleSlider("setValue", currentValue + 1);
       break;
-    }
+    case 90: // z
+      triggerLoop(0);
+      break;
+    case 88:
+      triggerLoop(1);
+      break;
+  }
 }
 
 function checkVolume() {
@@ -58,6 +69,38 @@ function changeMode() {
   else
     $("#mode").html('Switch to 50-50');
   updateVolume();
+}
+
+function setLoop(p) {
+    checkLoop(p);
+    loop[p].interval = window.setInterval(checkLoop, 1, p);
+}
+
+function checkLoop(p) {
+ if (players[p].getCurrentTime() >= loop[p].end)
+   players[p].seekTo(loop[p].start);
+}
+
+function triggerLoop(p) {
+  var time = players[p].getCurrentTime();
+  if (loop[p].state == "off") {
+    loop[p].start = time; 
+    loop[p].state = "init";
+  }
+  else if (loop[p].state == "init") {
+    loop[p].end = time; 
+    loop[p].state = "on";
+    setLoop(p, loop[p].start, loop[p].end);
+  }
+  else if (loop[p].state = "on") {
+    loop[p].state = "off";
+    clearLoop(p);
+  }
+  console.log(loop[p].state);
+}
+
+function clearLoop(p) {
+  window.clearInterval(loop[p].interval);
 }
 
 $(document).ready(function() {

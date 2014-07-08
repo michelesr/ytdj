@@ -1,3 +1,4 @@
+var players = new Array([2])
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 
@@ -33,6 +34,8 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   player.setVolume("50");
   player2.setVolume("0");
+  players[0] = player;
+  players[1] = player2;
 }
 
 // 5. The API calls this function when the player's state changes.
