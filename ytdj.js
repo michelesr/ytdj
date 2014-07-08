@@ -1,5 +1,5 @@
-var vol1 = 1;
-var vol2 = 1;
+var vol1 = 0.5;
+var vol2 = 0.5;
 var hover = false;
 
 function whatIsId() { 
@@ -18,6 +18,13 @@ function onKeyDown(k) {
 	$('#fader').simpleSlider("setValue", currentValue + 1);
       break;
     }
+}
+
+function checkVolume() {
+  if($("#vol1").val() > 50 || $("#vol2").val() > 50)
+    $("#loud").fadeIn(500);
+  else
+    $("#loud").fadeOut(500);
 }
 
 function updateVolume() {
@@ -52,11 +59,13 @@ $(document).ready(function() {
 
   $('#vol1').change(function () {
     vol1 = $('#vol1').val() / 100;
+    checkVolume();
     updateVolume();
   });
 
   $('#vol2').change(function () {
     vol2 = $('#vol2').val() / 100;
+    checkVolume();
     updateVolume();
   });
 

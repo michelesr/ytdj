@@ -17,3 +17,8 @@ h1 {
 .footer {
   background-color: #ede;
 }
+
+.warning {
+  color:red;
+  display: none;
+}

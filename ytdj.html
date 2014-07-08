@@ -13,12 +13,13 @@
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <h1>Youtube DJ Player</h1>
     <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a></p>
+    <p id="loud" class="warning">Louder volume can generate audio distortion when you mix them!</p>
     <div class="player">
-        <p><b>Video #1</b></p><input value="Insert video ID" type="text" id="id1"></input><button id="b1">Load</button> <br><input type="range" min="0" max="100" step="1" id="vol1" value="100"></input><br><br>
+        <p><b>Video #1</b></p><input value="Insert video ID" type="text" id="id1"></input><button id="b1">Load</button> <br><input type="range" min="0" max="100" step="1" id="vol1" value="50"></input><br><br>
         <div id="player"></div><br>
     </div>
     <div class="player">
-        <p><b>Video #2</b></p><input value="Insert video ID" type="text" id="id2"></input><button id="b2">Load</button><br><input type="range" min="0" max="100" step="1" id="vol2" value="100"></input><br><br>
+        <p><b>Video #2</b></p><input value="Insert video ID" type="text" id="id2"></input><button id="b2">Load</button><br><input type="range" min="0" max="100" step="1" id="vol2" value="50"></input><br><br>
         <div id="player2"></div><br>
     </div>
     <div class="faderDiv">
