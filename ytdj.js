@@ -82,7 +82,6 @@ function changeMode() {
 }
 
 function setLoop(p) {
-    checkLoop(p);
     loop[p].interval = window.setInterval(checkLoop, 1, p);
 }
 
