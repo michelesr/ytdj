@@ -121,16 +121,28 @@ function showPlayers() {
   $(".players").fadeIn(500); 
 }
 
+function checkVideoId(id) {
+  if (id.indexOf("youtu.be/") != -1)
+    id = id.substring(id.indexOf("e") + 2, id.length);
+  index = id.indexOf("=");
+  if (index != -1) 
+    id = id.substring(index +1, id.length);
+  index = id.indexOf("&");
+  if (index != -1) 
+    id = id.substring(0, index);
+  return(id);
+}
+
 $(document).ready(function() {
   $("#fader-slider").css("margin-left", "auto");
   $("#fader-slider").css("margin-right", "auto");
 
   $('#b1').click(function () {
-    player.loadVideoById($("#id1").val());
+    player.loadVideoById(checkVideoId($("#id1").val()));
   });
 
   $('#b2').click(function () {
-    player2.loadVideoById($("#id2").val());
+    player2.loadVideoById(checkVideoId($("#id2").val()));
   });
 
   $('#fader').change(function () {
