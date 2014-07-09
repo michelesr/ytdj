@@ -138,11 +138,15 @@ $(document).ready(function() {
   $("#fader-slider").css("margin-right", "auto");
 
   $('#b1').click(function () {
-    player.loadVideoById(checkVideoId($("#id1").val()));
+    var id = checkVideoId($("#id1").val());
+    $("#id1").val(id);
+    player.loadVideoById(id);
   });
 
   $('#b2').click(function () {
-    player2.loadVideoById(checkVideoId($("#id2").val()));
+    var id = checkVideoId($("#id2").val());
+    $("#id2").val(id);
+    player2.loadVideoById(id);
   });
 
   $('#fader').change(function () {
