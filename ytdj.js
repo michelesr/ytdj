@@ -27,15 +27,21 @@ function onStateChangeHandler2(state) {
 
 function stateChange(x, s) {
   var d = s.data;
-  if (d == 0 || d == 2) {
-    $("#pause"+x).html("Play");
-    $("#pause"+x).css("background-color", "green");
-    playing[x-1] = false;
+  if (d == -1) {
+    $("#loop"+x +", #pause"+x).css("display", "none");
   }
-  else if (d == 1) {
-    $("#pause"+x).html("Pause");
-    $("#pause"+x).css("background-color", "red");
-    playing[x-1] = true;
+  else {
+    $("#loop"+x +", #pause"+x).css("display", "inline-block");
+    if (d == 0 || d == 2) {
+      $("#pause"+x).html("Play");
+      $("#pause"+x).css("background-color", "green");
+      playing[x-1] = false;
+    }
+    else if (d == 1) {
+      $("#pause"+x).html("Pause");
+      $("#pause"+x).css("background-color", "red");
+      playing[x-1] = true;
+    }
   }
 }
 
