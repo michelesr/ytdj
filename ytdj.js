@@ -68,6 +68,10 @@ function sliderToCenter() {
   $('#fader').simpleSlider("setValue", 100);
 }
 
+function checkInputFocus() {
+  return $(".textbox").is(":focus"); 
+}
+
 function getVolume(x) {
   return($("#vol"+x).val());
 }
@@ -229,27 +233,27 @@ $(document).ready(function() {
 
   $(document).keydown(function(k) {
     x = k.keyCode? k.keyCode: k.charCode;
-    if (keys.indexOf(x) != -1) {
+    if (keys.indexOf(x) != -1 && !checkInputFocus()) {
       k.preventDefault();
       switch(k.keyCode? k.keyCode: k.charCode) {
-  case 48: // 0
-    volumeMax(1);
-    break;
-  case 57: // 9
-    volumeMid(1);
-    break;
-  case 56: // 8
-    muteUnmute(1);
-    break;
-  case 80: // p
-    volumeMax(2);
-    break;
-  case 79: // o
-    volumeMid(2);
-    break;
-  case 73: // i
-    muteUnmute(2);
-    break;
+        case 48: // 0
+	  volumeMax(1);
+	  break;
+	case 57: // 9
+	  volumeMid(1);
+	  break;
+	case 56: // 8
+	  muteUnmute(1);
+	  break;
+	case 80: // p
+	  volumeMax(2);
+	  break;
+	case 79: // o
+	  volumeMid(2);
+	  break;
+	case 73: // i
+	muteUnmute(2);
+	break;
 	case 81: // q
 	  sliderToLeft();
 	  break;
