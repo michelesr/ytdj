@@ -217,6 +217,7 @@ function checkVideoId(id) {
 function startVideo(p) {
     var id = checkVideoId($("#id"+p).val());
     $("#id"+p).val(id);
+    localStorage.setItem("ytdjpl_input" + p, id);
     players[p-1].loadVideoById(id);
 }
 
@@ -229,7 +230,11 @@ function changeVolume(v) {
 $(document).ready(function() {
   $("#fader-slider").css("margin-left", "auto");
   $("#fader-slider").css("margin-right", "auto");
-
+  var x;
+  if (x = localStorage.getItem("ytdjpl_input1"))
+    $("#id1").val(x);
+  if (x = localStorage.getItem("ytdjpl_input2"))
+    $("#id2").val(x);
 
   $(document).keydown(function(k) {
     x = k.keyCode? k.keyCode: k.charCode;
