@@ -35,11 +35,13 @@ function stateChange(x, s) {
     if (d == 0 || d == 2) {
       $("#pause"+x).html("Play");
       $("#pause"+x).css("background-color", "green");
+      $("#pause"+x).attr("title", "Play the video");
       playing[x-1] = false;
     }
     else if (d == 1) {
       $("#pause"+x).html("Pause");
       $("#pause"+x).css("background-color", "red");
+      $("#pause"+x).attr("title", "Pause the video");
       playing[x-1] = true;
     }
   }
@@ -167,17 +169,20 @@ function triggerLoop(p) {
     loop[p].start = time; 
     loop[p].state = "init";
     $("#loop"+(p+1)).css("background-color", "#f80");
+    $("#loop"+(p+1)).attr("title", "Take the final loop time and start the loop");
   }
   else if (loop[p].state == "init") {
     loop[p].end = time; 
     loop[p].state = "on";
     setLoop(p, loop[p].start, loop[p].end);
     $("#loop"+(p+1)).css("background-color", "#080");
+    $("#loop"+(p+1)).attr("title", "Release the loop");
   }
   else if (loop[p].state = "on") {
     loop[p].state = "off";
     clearLoop(p);
     $("#loop"+(p+1)).css("background-color", "#f00");
+    $("#loop"+(p+1)).attr("title", "Take the initial loop time");
   }
 }
 

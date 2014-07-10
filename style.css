@@ -4,9 +4,13 @@ body {
   text-align: center;
 }
 
-h1 {
-  text-align: center;
-  color: #333
+div {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;
 }
 
 .playerDiv {
@@ -19,29 +23,57 @@ h1 {
 }
 
 .warning {
-  color:red;
+  color: #f00;
   display: none;
 }
 
 .buttonDiv {
   background-color: #dcd;
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
   margin-top: 5px;
+}
+
+.num {
+  border-radius: 100%;
+  border: solid 2px #eee;
+  height: 30px;
+  width: 30px;
+  font-size: 25px;
+  color: #333;
+  cursor: default;
+}
+
+.textbox {
+  color: #333;
+  background-color:#eee;
+  border: 2px solid #ddd;
+  text-align: center;
 }
 
 .button {
   display: none;
-  margin-left:auto;
-  margin-right:auto;
+  border-radius: 5px;
   margin-top:10px;
+  margin-bottom:10px;
   color: #fff;
-  text-align: center;
+  font-weight: bold;
   vertical-align: middle;
   cursor: pointer;
+  height: 25px;
+  width: 50px;
   background-color: #f00;
   border: 2px solid #fff;
+}
+
+#title {
+  font-family: 'Raleway', helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  color: #fff;
+  background-color:red;
+  border: 5px solid #fff;
+  border-radius: 5%;
+  height:60px;
+  width:400px;
 }
 
 #b1, #b2 {

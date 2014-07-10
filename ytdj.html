@@ -5,41 +5,47 @@
     <script type="text/javascript" src="simple-slider.min.js"></script>
     <script type="text/javascript" src="players.js"></script>
     <script type="text/javascript" src="ytdj.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link href="simple-slider-volume.css" rel="stylesheet" type="text/css" />
     <title>Youtube DJ Player - YTDJ</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <h1>Youtube DJ Player</h1>
-    <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a><br><a href="javascript:void(0)" onclick="howToLoop()">How to loop?</a><br><a href="javascript:void(0)" onclick="printControls()">Controls</a></p>
+    <div id="title">Youtube DJ Player</div>
+    <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a> <a href="javascript:void(0)" onclick="howToLoop()">How to loop?</a> <a href="javascript:void(0)" onclick="printControls()">Controls</a></p>
     <p id="loud" class="warning">Loud volume can generate audio distortion when you mix the videos!</p>
     <div class="playerDiv">
-        <p><b>Video #1</b><br><input type="range" min="0" max="100" step="1" id="vol1" value="50"></p><input value="Insert video ID or URL" type="text" id="id1"></input> <br></input>
-        <div class="buttonDiv">
-          <div class="button" id="b1">Load</div>
-          <div id="pause1" class="button">Pause</div>
-          <div id="loop1" class="button">Loop</div><br><br>
-        </div>
-        <div class="players" id="player"></div><br>
+      <p><div class="num">1</div><br>
+      <input title="Volume for player 1" type="range" min="0" max="100" step="1" id="vol1" value="50"><br>
+      <input title="Insert video id or url in this text box" value="Insert video ID or URL" type="text" class="textbox" id="id1"></input></p>
+      <div class="buttonDiv">
+        <div title="Load a video from the URL or ID provided" class="button" id="b1">Load</div>
+        <div title="Pause the video" id="pause1" class="button">Pause</div>
+        <div title="Take the initial loop time" id="loop1" class="button">Loop</div>
+      </div>
+      <div class="players" id="player"></div>
     </div>
     <div class="playerDiv">
-        <p><b>Video #2</b><br><input type="range" min="0" max="100" step="1" id="vol2" value="50"></p><input value="Insert video ID or URL" type="text" id="id2"></input><br></input>
-        <div class="buttonDiv">
-          <div class="button" id="b2">Load</div>
-          <div id="pause2" class="button">Pause</div>
-          <div id="loop2" class="button">Loop</div><br><br>
-        </div>
-        <div class="players" id="player2"></div><br>
+      <p><div class="num">2</div><br>
+      <input title="Volume for player 2" type="range" min="0" max="100" step="1" id="vol2" value="50"><br>
+      <input title="Insert video id or url in this text box" class="textbox" value="Insert video ID or URL" type="text" id="id2"></input></p>
+      <div class="buttonDiv">
+        <div title="Load a video from the URL or ID provided" class="button" id="b2">Load</div>
+        <div title="Pause the video" id="pause2" class="button">Pause</div>
+        <div title="Take the initial loop time" id="loop2" class="button">Loop</div>
+      </div>
+      <div class="players" id="player2"></div>
     </div>
     <div class="faderDiv">
-        <p>Use the fader to <b>mix</b>!</p></p><input id="fader" type="text" data-slider="true" data-slider-range="0,200" data-slider-step="1" data-slider-theme="volume"></input>
-        <p id="vol">100-0</p>
-        <p><a id="mode" href="javascript:void(0)" onclick="changeMode()">Switch to 50-50</a></p>
+      <p>Use the fader to <b>mix</b>!</p>
+      </p><input id="fader" type="text" data-slider="true" data-slider-range="0,200" data-slider-step="1" data-slider-theme="volume"></input></p>
+      <p id="vol">100-0</p>
+      <p><a id="mode" href="javascript:void(0)" onclick="changeMode()">Switch to 50-50</a></p>
     </div>
     <div class="footer">
-        <p>Mainteined by michelesr. Get the <a href="https://github.com/michelesr/ytdj/"/>source code!</a></p>
-    <p>Project <a href="https://michelesr.github.io/ytdj/">page</a>. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
+      <p>Mainteined by michelesr. Get the <a href="https://github.com/michelesr/ytdj/"/>source code!</a></p>
+      <p>Project <a href="https://michelesr.github.io/ytdj/">page</a>. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
     </div>
   </body>
 </html>
