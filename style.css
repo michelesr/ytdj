@@ -22,3 +22,24 @@ h1 {
   color:red;
   display: none;
 }
+
+.buttonDiv {
+  background-color: #dcd;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 5px;
+}
+
+.button {
+  display: inline-block;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:10px;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #f00;
+  border: 2px solid #fff;
+}

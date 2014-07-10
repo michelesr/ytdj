@@ -1,8 +1,9 @@
-var vol1 = 0.5;
-var vol2 = 0.5;
+var vol = [0.5, 0.5];
+var keys = [56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 90, 88, 72, 77, 78];
 var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" : 0, "end" : 0 , "interval": 0, "state": "off"}];
 var fiftyFifty = false;
-var hover = false;
+var mute_vol = [0.5, 0.5];
+var playing = [false,false];
 
 function whatIsId() { 
   alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
@@ -13,33 +14,97 @@ function howToLoop() {
 }
 
 function printControls() {
-  alert("Control Keys:\nleft/right: move the fader when mouse is near it\nz: loop trigger for video #1\nx: loop trigger for video #2\nh: hide/show the players");
+  alert("Control Keys\n\nFADER:\na/s: move left/right\nq: full left (100-0)\nw:middle (100-100 or 50-50)\ne: full right (0-100)\n\nTRACK #1:\nn: pause/play\n8: mute/unmute\n9: volume at 50%\n0: volume at 100%\nz: loop trigger\n\nTRACK #2:\nm: pause/play\ni: mute/unmute\no: volume at 50%\np: volume at 100%\nx: loop trigger\n\nOTHER:\nh: hide/show the players");
 }
 
-function onKeyDown(k) {
-  var currentValue = parseInt($('#fader').val());
-  switch(k.keyCode? k.keyCode: k.charCode) {
-    case 37:  // left
-      if (hover)
-	$('#fader').simpleSlider("setValue", currentValue - 1);
-      break;
-    case 39: // right
-      if (hover)
-	$('#fader').simpleSlider("setValue", currentValue + 1);
-      break;
-    case 90: // z
-      triggerLoop(0);
-      break;
-    case 88: // x
-      triggerLoop(1);
-      break;
-    case 72: // h
-      if($(".players").is(":visible"))
-        hidePlayers();
-      else
-	showPlayers();
-      break;
+function onStateChangeHandler1(state) {
+  stateChange(1, state);  
+}
+
+function onStateChangeHandler2(state) {
+  stateChange(2, state);
+}
+
+function stateChange(x, s) {
+  var d = s.data;
+  if (d == 0 || d == 2) {
+    $("#pause"+x).html("Play");
+    $("#pause"+x).css("background-color", "green");
+    playing[x-1] = false;
   }
+  else if (d == 1) {
+    $("#pause"+x).html("Pause");
+    $("#pause"+x).css("background-color", "red");
+    playing[x-1] = true;
+  }
+}
+
+function pausePlay(x) {
+  if (playing[x-1]) {
+    players[x-1].pauseVideo();
+  }
+  else {
+    players[x-1].playVideo();
+  }
+}
+
+function sliderToLeft() {
+  $('#fader').simpleSlider("setValue", 0);
+}
+
+function sliderToRight() {
+  $('#fader').simpleSlider("setValue", 200);
+}
+
+function sliderToCenter() {
+  $('#fader').simpleSlider("setValue", 100);
+}
+
+function getVolume(x) {
+  return($("#vol"+x).val());
+}
+
+function setVolume(x, v) {
+  $("#vol"+x).val(v);
+  changeVolume(x);;
+}
+
+function volumeMax(x) {
+ setVolume(x, 100);
+}
+
+function volumeMin(x) {
+ setVolume(x, 0);
+}
+
+function volumeMid(x) {
+ setVolume(x, 50);
+}
+
+function mute(x) {
+  mute_vol[x-1] =  $("#vol"+x).val();
+  volumeMin(x);
+}
+
+function unmute(x) {
+  setVolume(x, mute_vol[x-1]);
+}
+
+function muteUnmute(x) {
+    if(getVolume(x) != 0)
+      mute(x);
+    else
+      unmute(x);
+}
+
+function increaseSlider(x) {
+  var currentValue = parseInt($('#fader').val());
+  $('#fader').simpleSlider("setValue", currentValue - 2*x);
+}
+
+function decreaseSlider(x) {
+  var currentValue = parseInt($('#fader').val());
+  $('#fader').simpleSlider("setValue", currentValue + 2*x);
 }
 
 function checkVolume() {
@@ -54,20 +119,20 @@ function updateVolume() {
     if (!fiftyFifty) {
       if (fv <= 100) {
 	$('#vol').html("100-" + fv);
-	player.setVolume(100 * vol1);
-	player2.setVolume(fv * vol2);
+	player.setVolume(100 * vol[0]);
+	player2.setVolume(fv * vol[1]);
       }
       else {
 	$('#vol').html((200 - fv) + "-100");
-	player.setVolume((200 - fv) * vol1);
-	player2.setVolume(100 * vol2);
+	player.setVolume((200 - fv) * vol[0]);
+	player2.setVolume(100 * vol[1]);
       }
     }
     else {
-      fv /= 2;
+      fv = Math.round(fv / 2);
       $('#vol').html((100 - fv) + "-" + fv);
-      player.setVolume((100 - fv) * vol1);
-      player2.setVolume(fv * vol2);
+      player.setVolume((100 - fv) * vol[0]);
+      player2.setVolume(fv * vol[1]);
     }
 
 }
@@ -95,17 +160,19 @@ function triggerLoop(p) {
   if (loop[p].state == "off") {
     loop[p].start = time; 
     loop[p].state = "init";
+    $("#loop"+(p+1)).css("background-color", "#f80");
   }
   else if (loop[p].state == "init") {
     loop[p].end = time; 
     loop[p].state = "on";
     setLoop(p, loop[p].start, loop[p].end);
+    $("#loop"+(p+1)).css("background-color", "#080");
   }
   else if (loop[p].state = "on") {
     loop[p].state = "off";
     clearLoop(p);
+    $("#loop"+(p+1)).css("background-color", "#f00");
   }
-  console.log(loop[p].state);
 }
 
 function clearLoop(p) {
@@ -132,20 +199,105 @@ function checkVideoId(id) {
   return(id);
 }
 
+function startVideo(p) {
+    var id = checkVideoId($("#id"+p).val());
+    $("#id"+p).val(id);
+    players[p-1].loadVideoById(id);
+}
+
+function changeVolume(v) {
+    vol[v-1] = getVolume(v) / 100;
+    checkVolume();
+    updateVolume();
+}
+
 $(document).ready(function() {
   $("#fader-slider").css("margin-left", "auto");
   $("#fader-slider").css("margin-right", "auto");
 
-  $('#b1').click(function () {
-    var id = checkVideoId($("#id1").val());
-    $("#id1").val(id);
-    player.loadVideoById(id);
+
+  $(document).keydown(function(k) {
+    x = k.keyCode? k.keyCode: k.charCode;
+    if (keys.indexOf(x) != -1) {
+      k.preventDefault();
+      switch(k.keyCode? k.keyCode: k.charCode) {
+  case 48: // 0
+    volumeMax(1);
+    break;
+  case 57: // 9
+    volumeMid(1);
+    break;
+  case 56: // 8
+    muteUnmute(1);
+    break;
+  case 80: // p
+    volumeMax(2);
+    break;
+  case 79: // o
+    volumeMid(2);
+    break;
+  case 73: // i
+    muteUnmute(2);
+    break;
+	case 81: // q
+	  sliderToLeft();
+	  break;
+	case 87: // w
+	  sliderToCenter();
+	  break;
+	case 69: // e
+	  sliderToRight();
+	  break;
+	case 65:  // a
+	  increaseSlider(1);
+	  break;
+	case 83: // s
+	  decreaseSlider(1);
+	  break;
+	case 90: // z
+	  triggerLoop(0);
+	  break;
+	case 88: // x
+	  triggerLoop(1);
+	  break;
+  case 77:
+    pausePlay(2);
+    break;
+  case 78:
+    pausePlay(1);
+    break;
+	case 72: // h
+	  if($(".players").is(":visible"))
+	    hidePlayers();
+	  else
+	    showPlayers();
+	  break;
+      }
+    }
   });
 
+  $('#b1').click(function () {
+    startVideo(1);
+  });
+ 
   $('#b2').click(function () {
-    var id = checkVideoId($("#id2").val());
-    $("#id2").val(id);
-    player2.loadVideoById(id);
+    startVideo(2);
+  });
+
+  $('#id1').keydown(function (k) {
+    var x = k.keyCode? k.keyCode: k.charCode;
+    if(x == 13) {
+      k.preventDefault();
+      startVideo(1);
+    }
+  });
+
+  $('#id2').keydown(function (k) {
+    var x = k.keyCode? k.keyCode: k.charCode;
+    if(x == 13) {
+      k.preventDefault();
+      startVideo(2);
+    }
   });
 
   $('#fader').change(function () {
@@ -153,20 +305,26 @@ $(document).ready(function() {
   });
 
   $('#vol1').change(function () {
-    vol1 = $('#vol1').val() / 100;
-    checkVolume();
-    updateVolume();
+    changeVolume(1);
   });
 
   $('#vol2').change(function () {
-    vol2 = $('#vol2').val() / 100;
-    checkVolume();
-    updateVolume();
+    changeVolume(2);
   });
 
-  $('.faderDiv').hover(function () {
-    hover = true;
-  }, function() {
-    hover = false;
+  $("#loop1").click(function() {
+    triggerLoop(0);
+  });
+  
+  $("#loop2").click(function() {
+    triggerLoop(1);
+  });
+
+  $("#pause1").click(function() {
+    pausePlay(1);
+  });
+
+  $("#pause2").click(function() {
+    pausePlay(2);
   });
 });

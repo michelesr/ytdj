@@ -9,17 +9,27 @@
     <title>Youtube DJ Player - YTDJ</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
-  <body onkeydown="onKeyDown(event)">
+  <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <h1>Youtube DJ Player</h1>
     <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a><br><a href="javascript:void(0)" onclick="howToLoop()">How to loop?</a><br><a href="javascript:void(0)" onclick="printControls()">Controls</a></p>
     <p id="loud" class="warning">Loud volume can generate audio distortion when you mix the videos!</p>
     <div class="playerDiv">
-        <p><b>Video #1</b></p><input value="Insert video ID or URL" type="text" id="id1"></input><button id="b1">Load</button> <br><input type="range" min="0" max="100" step="1" id="vol1" value="50"></input><br><br>
+        <p><b>Video #1</b><br><input type="range" min="0" max="100" step="1" id="vol1" value="50"></p><input value="Insert video ID or URL" type="text" id="id1"></input> <br></input>
+        <div class="buttonDiv">
+          <div class="button" id="b1">Load</div>
+          <div id="pause1" class="button">Pause</div>
+          <div id="loop1" class="button">Loop</div><br><br>
+        </div>
         <div class="players" id="player"></div><br>
     </div>
     <div class="playerDiv">
-        <p><b>Video #2</b></p><input value="Insert video ID or URL" type="text" id="id2"></input><button id="b2">Load</button><br><input type="range" min="0" max="100" step="1" id="vol2" value="50"></input><br><br>
+        <p><b>Video #2</b><br><input type="range" min="0" max="100" step="1" id="vol2" value="50"></p><input value="Insert video ID or URL" type="text" id="id2"></input><br></input>
+        <div class="buttonDiv">
+          <div class="button" id="b2">Load</div>
+          <div id="pause2" class="button">Pause</div>
+          <div id="loop2" class="button">Loop</div><br><br>
+        </div>
         <div class="players" id="player2"></div><br>
     </div>
     <div class="faderDiv">
