@@ -15,7 +15,7 @@ function onYouTubeIframeAPIReady() {
     videoId: '',
     events: {
       'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
+      'onStateChange': onStateChangeHandler1
     }
   });
 
@@ -25,7 +25,7 @@ function onYouTubeIframeAPIReady() {
     videoId: '',
     events: {
       'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
+      'onStateChange': onStateChangeHandler2
     }
   });
 }
@@ -36,8 +36,6 @@ function onPlayerReady(event) {
   player2.setVolume("0");
   players[0] = player;
   players[1] = player2;
-  player.addEventListener("onStateChange", "onStateChangeHandler1");
-  player2.addEventListener("onStateChange", "onStateChangeHandler2");
 }
 
 // 5. The API calls this function when the player's state changes.

@@ -76,6 +76,10 @@ div {
   width:400px;
 }
 
-#b1, #b2 {
+.reloop {
+  width: 55px;
+}
+
+.b {
   display: inline-block;
 }

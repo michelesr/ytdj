@@ -1,20 +1,20 @@
 var vol = [0.5, 0.5];
-var keys = [56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 90, 88, 72, 77, 78];
+var keys = [49, 50, 51, 52, 53, 54, 56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 72, 77, 78];
 var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" : 0, "end" : 0 , "interval": 0, "state": "off"}];
 var fiftyFifty = false;
 var mute_vol = [0.5, 0.5];
 var playing = [false,false];
 
 function whatIsId() { 
-  alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after watch?v= ");
+  alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after \"watch?v=\"\nYou can load a video providing its URL (the address) or ID.");
 }
 
 function howToLoop() {
-  alert("To loop a video, press the trigger key 3 times, first time to get start time, second time to get end time and start the loop, last time to release the loop.\nTrigger key is 'z' for first video and 'x' for second video");
+  alert("To loop a video, press the loop in key to get initial time, loop out to take final time and start the loop, exit to finish the loop, reloop to retrigger the same loop. The loop won't start if final time is lower than start time.");
 }
 
 function printControls() {
-  alert("Control Keys\n\nFADER:\na/s: move left/right\nq: full left (100-0)\nw:middle (100-100 or 50-50)\ne: full right (0-100)\n\nTRACK #1:\nn: pause/play\n8: mute/unmute\n9: volume at 50%\n0: volume at 100%\nz: loop trigger\n\nTRACK #2:\nm: pause/play\ni: mute/unmute\no: volume at 50%\np: volume at 100%\nx: loop trigger\n\nOTHER:\nh: hide/show the players");
+  alert("Control Keys\n\nFADER:\na/s: move left/right\nq: full left (100-0)\nw:middle (100-100 or 50-50)\ne: full right (0-100)\n\nTRACK #1:\nn: pause/play\n8: mute/unmute\n9: volume at 50%\n0: volume at 100%\n1: loop in\n2: loop out\n3: exit/reloop\n\nTRACK #2:\nm: pause/play\ni: mute/unmute\no: volume at 50%\np: volume at 100%\n4: loop in\n5: loop out\n6: exit/reloop\n\nOTHER:\nh: hide/show the players");
 }
 
 function onStateChangeHandler1(state) {
@@ -28,10 +28,10 @@ function onStateChangeHandler2(state) {
 function stateChange(x, s) {
   var d = s.data;
   if (d == -1) {
-    $("#loop"+x +", #pause"+x).css("display", "none");
+    $(".button"+x).css("display", "none");
   }
   else {
-    $("#loop"+x +", #pause"+x).css("display", "inline-block");
+    $(".button"+x).css("display", "inline-block");
     if (d == 0 || d == 2) {
       $("#pause"+x).html("Play");
       $("#pause"+x).css("background-color", "green");
@@ -159,7 +159,13 @@ function changeMode() {
 }
 
 function setLoop(p) {
-    loop[p].interval = window.setInterval(checkLoop, 1, p);
+    if (checkLoopRange(p)) {
+      loop[p].interval = window.setInterval(checkLoop, 1, p);
+      loop[p].state = "on";
+      $("#reloop"+(p+1)).css("background-color", "green");
+      $("#reloop"+(p+1)).html("Exit");
+      $("#reloop"+(p+1)).attr("title", "Stop the loop");
+    }
 }
 
 function checkLoop(p) {
@@ -167,31 +173,24 @@ function checkLoop(p) {
    players[p].seekTo(loop[p].start);
 }
 
-function triggerLoop(p) {
-  var time = players[p].getCurrentTime();
-  if (loop[p].state == "off") {
-    loop[p].start = time; 
-    loop[p].state = "init";
-    $("#loop"+(p+1)).css("background-color", "#f80");
-    $("#loop"+(p+1)).attr("title", "Take the final loop time and start the loop");
-  }
-  else if (loop[p].state == "init") {
-    loop[p].end = time; 
-    loop[p].state = "on";
-    setLoop(p, loop[p].start, loop[p].end);
-    $("#loop"+(p+1)).css("background-color", "#080");
-    $("#loop"+(p+1)).attr("title", "Release the loop");
-  }
-  else if (loop[p].state = "on") {
-    loop[p].state = "off";
-    clearLoop(p);
-    $("#loop"+(p+1)).css("background-color", "#f00");
-    $("#loop"+(p+1)).attr("title", "Take the initial loop time");
-  }
+function setLoopIn(p) {
+  loop[p].start = players[p].getCurrentTime();
 }
 
+function setLoopOut(p) {
+  loop[p].end = players[p].getCurrentTime();
+  setLoop(p);
+}
+
+function checkLoopRange(p) {
+  return loop[p].start < loop[p].end; 
+}
 function clearLoop(p) {
   window.clearInterval(loop[p].interval);
+  loop[p].state = "off";
+  $("#reloop"+(p+1)).css("background-color", "#f00");
+  $("#reloop"+(p+1)).html("Reloop");
+  $("#reloop"+(p+1)).attr("title", "Restart the loop");
 }
 
 function hidePlayers() {
@@ -225,6 +224,15 @@ function changeVolume(v) {
     vol[v-1] = getVolume(v) / 100;
     checkVolume();
     updateVolume();
+}
+
+function reloopExit(p) {
+  if (loop[p].state == "on") {
+    clearLoop(p);
+  }
+  else {
+    setLoop(p);
+  }
 }
 
 $(document).ready(function() {
@@ -274,11 +282,23 @@ $(document).ready(function() {
 	case 83: // s
 	  decreaseSlider(1);
 	  break;
-	case 90: // z
-	  triggerLoop(0);
+	case 49: // 1
+	  setLoopIn(0);
 	  break;
-	case 88: // x
-	  triggerLoop(1);
+	case 50: // 2
+	  setLoopOut(0);
+	  break;
+	case 51: // 3
+	  reloopExit(0);
+	  break;
+	case 52: // 4
+	  setLoopIn(1);
+	  break;
+	case 53: // 5
+	  setLoopOut(1);
+	  break;
+	case 54: // 6
+	  reloopExit(1);
 	  break;
   case 77:
     pausePlay(2);
@@ -332,12 +352,28 @@ $(document).ready(function() {
     changeVolume(2);
   });
 
-  $("#loop1").click(function() {
-    triggerLoop(0);
+  $("#loop_in1").click(function() {
+    setLoopIn(0);
   });
   
-  $("#loop2").click(function() {
-    triggerLoop(1);
+  $("#loop_in2").click(function() {
+    setLoopIn(1);
+  });
+
+  $("#loop_out1").click(function() {
+    setLoopOut(0);
+  });
+  
+  $("#loop_out2").click(function() {
+    setLoopOut(1);
+  });
+
+  $("#reloop1").click(function() {
+    reloopExit(0);
+  });
+
+  $("#reloop2").click(function() {
+    reloopExit(1);
   });
 
   $("#pause1").click(function() {
