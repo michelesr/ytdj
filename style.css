@@ -16,6 +16,7 @@ div {
 .playerDiv {
   display: inline-block;
   background-color: #ede;
+  min-width: max-content;
 }
 
 .footer {
@@ -82,4 +83,9 @@ div {
 
 .b {
   display: inline-block;
+}
+
+.buttonSubDiv {
+  margin-left: 5px;
+  margin-right: 5px;
 }

@@ -10,6 +10,8 @@ There's 2 fader mode: 50-50 and 100-100, that are related to the crossfading mod
 
 To loop a video, press the loop in key to get initial time, loop out to take final time and start the loop, exit to finish the loop, reloop to retrigger the same loop. The loop won't start if final time is lower than start time.
 
+CUE: click "Pause" to pause the video, then seek to the desired point usign youtube timeline, click "Hear" to hear the audio in the seeked position, when you found the right position click "Set" to set the cue, then you can hold "Cue" or click "C-Play" to play the track from Cue position, the difference is that "Cue" will stop the track when you stop hold.
+
 Control Keys
 
 FADER:

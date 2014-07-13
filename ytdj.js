@@ -4,13 +4,19 @@ var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" 
 var fiftyFifty = false;
 var mute_vol = [0.5, 0.5];
 var playing = [false,false];
+var MICROLOOP_SIZE = 0.1;
+var cue = [0,0]
 
 function whatIsId() { 
-  alert("Id is the code that identifies the video on youtube site. You can find it in the url of the video, after \"watch?v=\"\nYou can load a video providing its URL (the address) or ID.");
+  alert('Id is the code that identifies the video on youtube site. You can find it in the url of the video, after "watch?v="\nYou can load a video providing its URL (the address) or ID.');
 }
 
 function howToLoop() {
   alert("To loop a video, press the loop in key to get initial time, loop out to take final time and start the loop, exit to finish the loop, reloop to retrigger the same loop. The loop won't start if final time is lower than start time.");
+}
+
+function howToCue() {
+  alert('Click "Pause" to pause the video, then seek to the desired point usign youtube timeline, click "Hear" to hear the audio in the seeked position, when you found the right position click "Set" to set the cue, then you can hold "Cue" or click "C-Play" to play the track from Cue position, the difference is that "Cue" will stop the track when you stop hold.');
 }
 
 function printControls() {
@@ -60,6 +66,14 @@ function sliderToLeft() {
   $('#fader').simpleSlider("setValue", 0);
 }
 
+function hearCurrentTime(p) {
+  var t = players[p].getCurrentTime();
+  players[p].playVideo();
+  setTimeout(function(p) {
+    players[p].pauseVideo();
+    players[p].seekTo(t);
+  }, 1000 * MICROLOOP_SIZE, p);
+}
 function sliderToRight() {
   $('#fader').simpleSlider("setValue", 200);
 }
@@ -226,6 +240,19 @@ function changeVolume(v) {
     updateVolume();
 }
 
+function setCue(p) {
+  cue[p] = players[p].getCurrentTime();
+}
+
+function cuePlay(p) {
+  players[p].seekTo(cue[p]);
+  players[p].playVideo();
+}
+
+function cueStop(p) {
+  players[p].pauseVideo();
+}
+
 function reloopExit(p) {
   if (loop[p].state == "on") {
     clearLoop(p);
@@ -380,7 +407,48 @@ $(document).ready(function() {
     pausePlay(1);
   });
 
+  $("#hear1").click(function() {
+    hearCurrentTime(0);
+  });
+
+  $("#hear2").click(function() {
+    hearCurrentTime(1);
+  });
+
   $("#pause2").click(function() {
     pausePlay(2);
+  });
+
+  $("#cue_set1").click(function() {
+    setCue(0);
+  });
+
+  $("#cue_set2").click(function() {
+    setCue(1);
+  });
+
+  $("#cue_play1").click(function() {
+    cuePlay(0);
+  });
+
+  $("#cue_play2").click(function() {
+    cuePlay(1);
+  });
+
+  $("#cue1").mousedown(function() {
+    cuePlay(0);
+  });
+
+  $("#cue1").mouseup(function() {
+    cueStop(0);
+  });
+
+
+  $("#cue2").mousedown(function() {
+    cuePlay(1);
+  });
+
+  $("#cue2").mouseup(function() {
+    cueStop(1);
   });
 });
