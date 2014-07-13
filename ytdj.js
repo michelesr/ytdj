@@ -1,5 +1,5 @@
 var vol = [0.5, 0.5];
-var KEYS = [88, 67, 86, 66, 49, 50, 51, 52, 53, 54, 56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 72, 77, 78];
+var KEYS = [37, 39, 88, 67, 86, 66, 49, 50, 51, 52, 53, 54, 56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 72, 77, 78];
 var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" : 0, "end" : 0 , "interval": 0, "state": "off"}];
 var fiftyFifty = false;
 var mute_vol = [0.5, 0.5];
@@ -17,11 +17,11 @@ function howToLoop() {
 }
 
 function howToCue() {
-  alert('Click "Pause" to pause the video, then seek to the desired point usign youtube timeline, click "Hear" to hear the audio in the seeked position, when you found the right position click "Set" to set the cue, then you can hold "Cue" or click "C-Play" to play the track from Cue position, the difference is that "Cue" will stop the track when you stop hold.');
+  alert('Click "Pause" to pause the video, then seek to the desired point using ALT+left/right (CTRL for second video) arrows, click "Hear" to hear again the audio in the seeked position, when you found the right position click "Set" to set the cue, then you can hold "Cue" or click "C-Play" to play the track from Cue position, the difference is that "Cue" will stop the track when you stop hold.');
 }
 
 function printControls() {
-  alert("Control Keys\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, X: hear, CTRL-X: set, V: set cue, CTRL-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, C: hear, CTRL-C: set cue, B: cue, CTRL-M: play from cue\n\nOTHER:\nH: hide/show the players");
+  alert("Control Keys (while youtube player is unfocused)\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, ALT-left/right: seek forward/back 20 ms, X: hear, CTRL-X: set, V: set cue, CTRL-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, CTRL-left/right: seek forward/back 20 ms, C: hear, CTRL-C: set cue, B: cue, CTRL-M: play from cue\n\nOTHER:\nH: hide/show the players");
 }
 
 function onStateChangeHandler1(state) {
@@ -54,6 +54,23 @@ function stateChange(x, s) {
   }
 }
 
+function seekLeft(x) {
+  var y = players[x].getCurrentTime();
+  console.log("y is " + y);
+  players[x].seekTo(y - 1/50.0);
+  if (!playing[x])
+    setTimeout(hearCurrentTime, 100, x);
+}
+
+function seekRight(x) {
+  var y = players[x].getCurrentTime();
+  console.log("y is " + y);
+  players[x].seekTo(y + 1/50.0);
+  if (!playing[x])
+    setTimeout(hearCurrentTime, 100, x);
+
+}
+
 function pausePlay(x) {
   if (playing[x-1]) {
     players[x-1].pauseVideo();
@@ -69,6 +86,7 @@ function sliderToLeft() {
 
 function hearCurrentTime(p) {
   var t = players[p].getCurrentTime();
+  console.log("t is now " + t);
   players[p].playVideo();
   setTimeout(function(p) {
     players[p].pauseVideo();
@@ -277,6 +295,18 @@ $(document).ready(function() {
     if (KEYS.indexOf(x) != -1 && !checkInputFocus()) {
       k.preventDefault();
       switch(k.keyCode? k.keyCode: k.charCode) {
+	case 37:
+	  if(k.altKey)
+            seekLeft(0);
+	  else if(k.ctrlKey)
+	    seekLeft(1);
+	  break;
+	case 39:
+	  if(k.altKey)
+            seekRight(0);
+	  else if(k.ctrlKey)
+	    seekRight(1);
+	  break;
         case 48: // 0
 	  volumeMax(1);
 	  break;
