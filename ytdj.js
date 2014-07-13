@@ -1,11 +1,12 @@
 var vol = [0.5, 0.5];
-var keys = [49, 50, 51, 52, 53, 54, 56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 72, 77, 78];
+var KEYS = [88, 67, 86, 66, 49, 50, 51, 52, 53, 54, 56, 57, 48, 73, 79, 80, 81, 87, 69, 65, 83, 72, 77, 78];
 var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" : 0, "end" : 0 , "interval": 0, "state": "off"}];
 var fiftyFifty = false;
 var mute_vol = [0.5, 0.5];
 var playing = [false,false];
 var MICROLOOP_SIZE = 0.1;
 var cue = [0,0]
+var keyDown = false;
 
 function whatIsId() { 
   alert('Id is the code that identifies the video on youtube site. You can find it in the url of the video, after "watch?v="\nYou can load a video providing its URL (the address) or ID.');
@@ -20,7 +21,7 @@ function howToCue() {
 }
 
 function printControls() {
-  alert("Control Keys\n\nFADER:\na/s: move left/right\nq: full left (100-0)\nw:middle (100-100 or 50-50)\ne: full right (0-100)\n\nTRACK #1:\nn: pause/play\n8: mute/unmute\n9: volume at 50%\n0: volume at 100%\n1: loop in\n2: loop out\n3: exit/reloop\n\nTRACK #2:\nm: pause/play\ni: mute/unmute\no: volume at 50%\np: volume at 100%\n4: loop in\n5: loop out\n6: exit/reloop\n\nOTHER:\nh: hide/show the players");
+  alert("Control Keys\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, X: hear, CTRL-X: set, V: set cue, CTRL-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, C: hear, CTRL-C: set cue, B: cue, CTRL-M: play from cue\n\nOTHER:\nH: hide/show the players");
 }
 
 function onStateChangeHandler1(state) {
@@ -273,7 +274,7 @@ $(document).ready(function() {
 
   $(document).keydown(function(k) {
     x = k.keyCode? k.keyCode: k.charCode;
-    if (keys.indexOf(x) != -1 && !checkInputFocus()) {
+    if (KEYS.indexOf(x) != -1 && !checkInputFocus()) {
       k.preventDefault();
       switch(k.keyCode? k.keyCode: k.charCode) {
         case 48: // 0
@@ -303,7 +304,7 @@ $(document).ready(function() {
 	case 69: // e
 	  sliderToRight();
 	  break;
-	case 65:  // a
+	case 65: // a
 	  increaseSlider(1);
 	  break;
 	case 83: // s
@@ -327,17 +328,65 @@ $(document).ready(function() {
 	case 54: // 6
 	  reloopExit(1);
 	  break;
-  case 77:
-    pausePlay(2);
-    break;
-  case 78:
-    pausePlay(1);
-    break;
+	case 77: // m
+	  if(k.altKey) 
+	    cuePlay(1);
+	  else
+	    pausePlay(2);
+	  break;
+	case 78: // n
+	  if(k.altKey) 
+	    cuePlay(0);
+	  else
+	    pausePlay(1);
+	  break;
 	case 72: // h
 	  if($(".players").is(":visible"))
 	    hidePlayers();
 	  else
 	    showPlayers();
+	  break;
+	case 86: // v
+	  if (!keyDown) {
+	    keyDown = true;
+	    cuePlay(0);
+	  }
+	  break;
+	case 66: // b
+	  if (!keyDown) {
+	    keyDown = true;
+	    cuePlay(1);
+	  }
+	  break;
+	case 88: // x
+	  if (k.altKey)
+            setCue(0);
+	  else
+	    hearCurrentTime(0);
+	  break;
+	case 67: // c
+	  if (k.altKey)
+            setCue(1);
+	  else
+	    hearCurrentTime(1);
+	  break;
+	    
+      }
+    }
+  });
+
+  $(document).keyup(function(k) {
+    x = k.keyCode? k.keyCode: k.charCode;
+    if (KEYS.indexOf(x) != -1 && !checkInputFocus()) {
+      k.preventDefault();
+      switch(k.keyCode? k.keyCode: k.charCode) {
+	case 86:
+	  keyDown = false;
+          cueStop(0);
+	  break;
+	case 66:
+	  keyDown = false;
+	  cueStop(1);
 	  break;
       }
     }
@@ -442,7 +491,6 @@ $(document).ready(function() {
   $("#cue1").mouseup(function() {
     cueStop(0);
   });
-
 
   $("#cue2").mousedown(function() {
     cuePlay(1);

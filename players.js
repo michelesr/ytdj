@@ -12,7 +12,6 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '390',
     width: '640',
-    videoId: '',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onStateChangeHandler1
@@ -22,7 +21,6 @@ function onYouTubeIframeAPIReady() {
   player2 = new YT.Player('player2', {
     height: '390',
     width: '640',
-    videoId: '',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onStateChangeHandler2
