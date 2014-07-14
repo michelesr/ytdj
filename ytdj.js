@@ -32,6 +32,8 @@ function onStateChangeHandler2(state) {
 }
 
 function stateChange(x, s) {
+  if (document.activeElement.className == "players")  
+    document.activeElement.blur();
   var d = s.data;
   if (d == -1) 
     $(".button"+x).css("display", "none");
