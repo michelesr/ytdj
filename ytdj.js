@@ -21,7 +21,7 @@ function howToCue() {
 }
 
 function printControls() {
-  alert("Control Keys (while youtube player is unfocused)\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, ALT-left/right: seek forward/back 20 ms, X: hear, CTRL-X: set, V: set cue, CTRL-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, CTRL-left/right: seek forward/back 20 ms, C: hear, CTRL-C: set cue, B: cue, CTRL-M: play from cue\n\nOTHER:\nH: hide/show the players");
+  alert("Control Keys (while youtube player is unfocused)\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, ALT-left/right: seek forward/back 20 ms, X: hear, ALT-X: set, V: set cue, ALT-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, CTRL-left/right: seek forward/back 20 ms, C: hear, ALT-C: set cue, B: cue, ALT-M: play from cue\n\nOTHER:\nH: hide/show the players");
 }
 function onStateChangeHandler1(state) {
   stateChange(1, state);  
