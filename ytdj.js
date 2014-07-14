@@ -4,7 +4,7 @@ var loop = [{"start" : 0, "end" : 0 , "interval": 0, "state" : "off"}, {"start" 
 var fiftyFifty = false;
 var mute_vol = [0.5, 0.5];
 var playing = [false,false];
-var MICROLOOP_SIZE = 0.1;
+var MICROLOOP_SIZE = 0.2;
 var cue = [0,0]
 var keyDown = false;
 
