@@ -318,6 +318,12 @@ $(document).ready(function() {
   $("#vol1-slider, #vol2-slider").css("width", "145px");
   $("#seek1-slider, #seek2-slider").attr("title", "Seek");
   $("#vol1-slider, #vol2-slider").attr("title", "Volume");
+
+  setTimeout(function() {
+    if ($(".slider, .slider-volume").css("min-height") != "18px")
+      $(".slider, .slider-volume").css("min-height", "18px");
+  }, 1000);
+
   setInterval(updateSeekSliders, 5000);
   var x;
   if (x = localStorage.getItem("ytdjpl_input1"))
