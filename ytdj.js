@@ -317,7 +317,7 @@ $(document).ready(function() {
   $("#vol1-slider, #vol2-slider").attr("title", "Volume");
 
   setTimeout(function() {
-    if ($(".slider, .slider-volume").css("min-height") != "18px")
+    if ($(".slider").css("min-height") != "18px" || $(".slider-volume").css("min-height") != "18px")
       setTimeout(function() {window.location.assign(document.location);}, 5000);
   }, 1000);
 
