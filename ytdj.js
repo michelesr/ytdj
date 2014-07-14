@@ -33,9 +33,8 @@ function onStateChangeHandler2(state) {
 
 function stateChange(x, s) {
   var d = s.data;
-  if (d == -1) {
+  if (d == -1) 
     $(".button"+x).css("display", "none");
-  }
   else {
     $(".button"+x).css("display", "inline-block");
     if (d == 0 || d == 2) {
@@ -65,20 +64,13 @@ function seekRight(x) {
   players[x].seekTo(y + 1/50.0);
   if (!playing[x])
     setTimeout(hearCurrentTime, 100, x);
-
 }
 
 function pausePlay(x) {
-  if (playing[x-1]) {
+  if (playing[x-1])
     players[x-1].pauseVideo();
-  }
-  else {
+  else 
     players[x-1].playVideo();
-  }
-}
-
-function sliderToLeft() {
-  $('#fader').simpleSlider("setValue", 0);
 }
 
 function hearCurrentTime(p) {
@@ -89,6 +81,11 @@ function hearCurrentTime(p) {
     players[p].seekTo(t);
   }, 1000 * MICROLOOP_SIZE, p);
 }
+
+function sliderToLeft() {
+  $('#fader').simpleSlider("setValue", 0);
+}
+
 function sliderToRight() {
   $('#fader').simpleSlider("setValue", 200);
 }
@@ -119,7 +116,7 @@ function volumeMin(x) {
 }
 
 function volumeMid(x) {
- eetVolume(x, 50);
+ setVolume(x, 50);
 }
 
 function mute(x) {
@@ -132,10 +129,10 @@ function unmute(x) {
 }
 
 function muteUnmute(x) {
-    if(getVolume(x) != 0)
-      mute(x);
-    else
-      unmute(x);
+  if(getVolume(x) != 0)
+    mute(x);
+  else
+    unmute(x);
 }
 
 function increaseSlider(x) {
@@ -159,14 +156,14 @@ function updateVolume() {
     var fv = $("#fader").val();
     if (!fiftyFifty) {
       if (fv <= 100) {
-	$('#vol').html("100-" + fv);
-	player.setVolume(100 * vol[0]);
-	player2.setVolume(fv * vol[1]);
+        $('#vol').html("100-" + fv);
+        player.setVolume(100 * vol[0]);
+        player2.setVolume(fv * vol[1]);
       }
       else {
-	$('#vol').html((200 - fv) + "-100");
-	player.setVolume((200 - fv) * vol[0]);
-	player2.setVolume(100 * vol[1]);
+        $('#vol').html((200 - fv) + "-100");
+        player.setVolume((200 - fv) * vol[0]);
+        player2.setVolume(100 * vol[1]);
       }
     }
     else {
@@ -175,7 +172,6 @@ function updateVolume() {
       player.setVolume((100 - fv) * vol[0]);
       player2.setVolume(fv * vol[1]);
     }
-
 }
 
 function changeMode() {
@@ -188,13 +184,13 @@ function changeMode() {
 }
 
 function setLoop(p) {
-    if (checkLoopRange(p)) {
-      loop[p].interval = window.setInterval(checkLoop, 1, p);
-      loop[p].state = "on";
-      $("#reloop"+(p+1)).css("background-color", "green");
-      $("#reloop"+(p+1)).html("Exit");
-      $("#reloop"+(p+1)).attr("title", "Stop the loop");
-    }
+  if (checkLoopRange(p)) {
+    loop[p].interval = window.setInterval(checkLoop, 1, p);
+    loop[p].state = "on";
+    $("#reloop"+(p+1)).css("background-color", "green");
+    $("#reloop"+(p+1)).html("Exit");
+    $("#reloop"+(p+1)).attr("title", "Stop the loop");
+  }
 }
 
 function checkLoop(p) {
@@ -215,6 +211,7 @@ function setLoopOut(p) {
 function checkLoopRange(p) {
   return loop[p].start < loop[p].end; 
 }
+
 function clearLoop(p) {
   window.clearInterval(loop[p].interval);
   loop[p].state = "off";
@@ -276,16 +273,16 @@ function checkVideoId(id) {
 }
 
 function startVideo(p) {
-    var id = checkVideoId($("#id"+p).val());
-    $("#id"+p).val(id);
-    localStorage.setItem("ytdjpl_input" + p, id);
-    players[p-1].loadVideoById(id);
+  var id = checkVideoId($("#id"+p).val());
+  $("#id"+p).val(id);
+  localStorage.setItem("ytdjpl_input" + p, id);
+  players[p-1].loadVideoById(id);
 }
 
 function changeVolume(v) {
-    vol[v-1] = getVolume(v) / 100;
-    checkVolume();
-    updateVolume();
+  vol[v-1] = getVolume(v) / 100;
+  checkVolume();
+  updateVolume();
 }
 
 function setCue(p) {
@@ -321,9 +318,7 @@ $(document).ready(function() {
 
   setTimeout(function() {
     if ($(".slider, .slider-volume").css("min-height") != "18px")
-      setTimeout(function() {
-        window.location.assign(document.location);
-      }, 5000);
+      setTimeout(function() {window.location.assign(document.location);}, 5000);
   }, 1000);
 
   setInterval(updateSeekSliders, 5000);
@@ -338,112 +333,111 @@ $(document).ready(function() {
     if (KEYS.indexOf(x) != -1 && !checkInputFocus()) {
       k.preventDefault();
       switch(k.keyCode? k.keyCode: k.charCode) {
-	case 37:
-	  if(k.altKey)
+        case 37:
+          if(k.altKey)
             seekLeft(0);
-	  else if(k.ctrlKey)
-	    seekLeft(1);
-	  break;
-	case 39:
-	  if(k.altKey)
+          else if(k.ctrlKey)
+            seekLeft(1);
+          break;
+        case 39:
+          if(k.altKey)
             seekRight(0);
-	  else if(k.ctrlKey)
-	    seekRight(1);
-	  break;
+          else if(k.ctrlKey)
+            seekRight(1);
+          break;
         case 48: // 0
-	  volumeMax(1);
-	  break;
-	case 57: // 9
-	  volumeMid(1);
-	  break;
-	case 56: // 8
-	  muteUnmute(1);
-	  break;
-	case 80: // p
-	  volumeMax(2);
-	  break;
-	case 79: // o
-	  volumeMid(2);
-	  break;
-	case 73: // i
-	muteUnmute(2);
-	break;
-	case 81: // q
-	  sliderToLeft();
-	  break;
-	case 87: // w
-	  sliderToCenter();
-	  break;
-	case 69: // e
-	  sliderToRight();
-	  break;
-	case 65: // a
-	  increaseSlider(1);
-	  break;
-	case 83: // s
-	  decreaseSlider(1);
-	  break;
-	case 49: // 1
-	  setLoopIn(0);
-	  break;
-	case 50: // 2
-	  setLoopOut(0);
-	  break;
-	case 51: // 3
-	  reloopExit(0);
-	  break;
-	case 52: // 4
-	  setLoopIn(1);
-	  break;
-	case 53: // 5
-	  setLoopOut(1);
-	  break;
-	case 54: // 6
-	  reloopExit(1);
-	  break;
-	case 77: // m
-	  if(k.altKey) 
-	    cuePlay(1);
-	  else
-	    pausePlay(2);
-	  break;
-	case 78: // n
-	  if(k.altKey) 
-	    cuePlay(0);
-	  else
-	    pausePlay(1);
-	  break;
-	case 72: // h
-	  if($(".players").is(":visible"))
-	    hidePlayers();
-	  else
-	    showPlayers();
-	  break;
-	case 86: // v
-	  if (!keyDown) {
-	    keyDown = true;
-	    cuePlay(0);
-	  }
-	  break;
-	case 66: // b
-	  if (!keyDown) {
-	    keyDown = true;
-	    cuePlay(1);
-	  }
-	  break;
-	case 88: // x
-	  if (k.altKey)
+          volumeMax(1);
+          break;
+        case 57: // 9
+          volumeMid(1);
+          break;
+        case 56: // 8
+          muteUnmute(1);
+          break;
+        case 80: // p
+          volumeMax(2);
+          break;
+        case 79: // o
+          volumeMid(2);
+          break;
+        case 73: // i
+          muteUnmute(2);
+          break;
+        case 81: // q
+          sliderToLeft();
+          break;
+        case 87: // w
+          sliderToCenter();
+          break;
+        case 69: // e
+          sliderToRight();
+          break;
+        case 65: // a
+          increaseSlider(1);
+          break;
+        case 83: // s
+          decreaseSlider(1);
+          break;
+        case 49: // 1
+          setLoopIn(0);
+          break;
+        case 50: // 2
+          setLoopOut(0);
+          break;
+        case 51: // 3
+          reloopExit(0);
+          break;
+        case 52: // 4
+          setLoopIn(1);
+          break;
+        case 53: // 5
+          setLoopOut(1);
+          break;
+        case 54: // 6
+          reloopExit(1);
+          break;
+        case 77: // m
+          if(k.altKey) 
+            cuePlay(1);
+          else
+            pausePlay(2);
+          break;
+        case 78: // n
+          if(k.altKey) 
+            cuePlay(0);
+          else
+            pausePlay(1);
+          break;
+        case 72: // h
+          if($(".players").is(":visible"))
+            hidePlayers();
+          else
+            showPlayers();
+          break;
+        case 86: // v
+          if (!keyDown) {
+            keyDown = true;
+            cuePlay(0);
+          }
+          break;
+        case 66: // b
+          if (!keyDown) {
+            keyDown = true;
+            cuePlay(1);
+          }
+          break;
+        case 88: // x
+          if (k.altKey)
             setCue(0);
-	  else
-	    hearCurrentTime(0);
-	  break;
-	case 67: // c
-	  if (k.altKey)
+          else
+            hearCurrentTime(0);
+          break;
+        case 67: // c
+          if (k.altKey)
             setCue(1);
-	  else
-	    hearCurrentTime(1);
-	  break;
-	    
+          else
+            hearCurrentTime(1);
+          break;
       }
     }
   });
@@ -453,14 +447,14 @@ $(document).ready(function() {
     if (KEYS.indexOf(x) != -1 && !checkInputFocus()) {
       k.preventDefault();
       switch(k.keyCode? k.keyCode: k.charCode) {
-	case 86:
-	  keyDown = false;
+        case 86:
+          keyDown = false;
           cueStop(0);
-	  break;
-	case 66:
-	  keyDown = false;
-	  cueStop(1);
-	  break;
+          break;
+        case 66:
+          keyDown = false;
+          cueStop(1);
+          break;
       }
     }
   });
