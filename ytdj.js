@@ -321,11 +321,9 @@ $(document).ready(function() {
 
   setTimeout(function() {
     if ($(".slider, .slider-volume").css("min-height") != "18px")
-      $(".slider, .slider-volume").css("min-height", "18px");
-    if ($(".slider .dragger").css("margin-top") != "-9px")
-      $(".slider .dragger").css("margin-top", "-9px");
-    if ($(".slider .dragger").css("margin-left") != "-9px")
-      $(".slider .dragger").css("margin-left", "-9px");
+      setTimeout(function() {
+        window.location.assign(document.location);
+      }, 5000);
   }, 1000);
 
   setInterval(updateSeekSliders, 5000);
