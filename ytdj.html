@@ -7,6 +7,7 @@
     <script type="text/javascript" src="ytdj.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link href="simple-slider-volume.css" rel="stylesheet" type="text/css" />
+    <link href="simple-slider.css" rel="stylesheet" type="text/css" />
     <title>Youtube DJ Player - YTDJ</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
@@ -16,8 +17,8 @@
     <p><a href="javascript:void(0)" onclick="whatIsId()">What is ID?</a> <a href="javascript:void(0)" onclick="howToLoop()">How to loop?</a> <a href="javascript:void(0);" onclick="howToCue()">How to CUE?</a> <a href="javascript:void(0)" onclick="printControls()">Controls</a></p>
     <p id="loud" class="warning">Loud volume can generate audio distortion when you mix the videos!</p>
     <div class="playerDiv">
-      <p><div class="num">1</div><br>
-      <input title="Volume for player 1" type="range" min="0" max="100" step="1" id="vol1" value="50"><br>
+      <p><div class="num">1</div>
+      <input id="vol1" type="text" data-slider="true" data-slider-range="0,100" data-slider-step="1"></input>
       <input title="Insert video id or url in this text box" value="mp4UsKm7QUI" type="text" class="textbox" id="id1"></input></p>
       <div class="buttonDiv">
         <div class="cueDiv buttonSubDiv">
@@ -37,10 +38,11 @@
         </div>
       </div>
       <div class="players" id="player"></div>
+      <input id="seek1" type="text" data-slider="true" data-slider-range="0,200" data-slider-step="1"></input>
     </div>
     <div class="playerDiv">
-      <p><div class="num">2</div><br>
-      <input title="Volume for player 2" type="range" min="0" max="100" step="1" id="vol2" value="50"><br>
+      <p><div class="num">2</div>
+      <input id="vol2" type="text" data-slider="true" data-slider-range="0,100" data-slider-step="1"></input>
       <input title="Insert video id or url in this text box" class="textbox" value="rtZAzh0TSAo" type="text" id="id2"></input></p>
       <div class="buttonDiv">
         <div class="cueDiv buttonSubDiv">
@@ -60,6 +62,7 @@
         </div>
       </div>
       <div class="players" id="player2"></div>
+      <input id="seek2" type="text" data-slider="true" data-slider-range="0,200" data-slider-step="1"></input>
     </div>
     <div class="faderDiv">
       <p>Use the fader to <b>mix</b>!</p>

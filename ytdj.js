@@ -23,7 +23,6 @@ function howToCue() {
 function printControls() {
   alert("Control Keys (while youtube player is unfocused)\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, ALT-left/right: seek forward/back 20 ms, X: hear, CTRL-X: set, V: set cue, CTRL-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, CTRL-left/right: seek forward/back 20 ms, C: hear, CTRL-C: set cue, B: cue, CTRL-M: play from cue\n\nOTHER:\nH: hide/show the players");
 }
-
 function onStateChangeHandler1(state) {
   stateChange(1, state);  
 }
@@ -56,7 +55,6 @@ function stateChange(x, s) {
 
 function seekLeft(x) {
   var y = players[x].getCurrentTime();
-  console.log("y is " + y);
   players[x].seekTo(y - 1/50.0);
   if (!playing[x])
     setTimeout(hearCurrentTime, 100, x);
@@ -64,7 +62,6 @@ function seekLeft(x) {
 
 function seekRight(x) {
   var y = players[x].getCurrentTime();
-  console.log("y is " + y);
   players[x].seekTo(y + 1/50.0);
   if (!playing[x])
     setTimeout(hearCurrentTime, 100, x);
@@ -86,7 +83,6 @@ function sliderToLeft() {
 
 function hearCurrentTime(p) {
   var t = players[p].getCurrentTime();
-  console.log("t is now " + t);
   players[p].playVideo();
   setTimeout(function(p) {
     players[p].pauseVideo();
@@ -110,7 +106,7 @@ function getVolume(x) {
 }
 
 function setVolume(x, v) {
-  $("#vol"+x).val(v);
+  $("#vol"+x).simpleSlider("setValue", v);
   changeVolume(x);;
 }
 
@@ -123,7 +119,7 @@ function volumeMin(x) {
 }
 
 function volumeMid(x) {
- setVolume(x, 50);
+ eetVolume(x, 50);
 }
 
 function mute(x) {
@@ -202,7 +198,8 @@ function setLoop(p) {
 }
 
 function checkLoop(p) {
- if (players[p].getCurrentTime() >= loop[p].end)
+ var t = players[p].getCurrentTime();
+ if (t >= loop[p].end || t < loop[p].start)
    players[p].seekTo(loop[p].start);
 }
 
@@ -228,10 +225,42 @@ function clearLoop(p) {
 
 function hidePlayers() {
   $(".players").fadeOut(500); 
+  $("#seek1-slider, #seek2-slider").css("width", "145px");
+  $("#seek1-slider .dragger").css("left", "0px"); 
+  $("#seek2-slider .dragger").css("left", "0px"); 
+  updateSeekSliders();
 }
 
 function showPlayers() {
   $(".players").fadeIn(500); 
+  $("#seek1-slider, #seek2-slider").css("width", "500px");
+  $("#seek1-slider .dragger").css("left", "0px"); 
+  $("#seek2-slider .dragger").css("left", "0px"); 
+  updateSeekSliders();
+}
+
+function updateSeekSliders() {
+  var w1;
+  var w2;
+  var t1 = players[0].getCurrentTime();
+  var t2 = players[1].getCurrentTime();
+
+  if (t1 == 0)
+    w1 = 0;
+  else if ($("#seek1-slider").css("width") == "145px")
+    w1 = 145 * t1 / players[0].getDuration();
+  else 
+    w1 = 500 * t1 / players[0].getDuration();
+
+  if (t2 == 0)
+    w2 = 0;
+  else if ($("#seek1-slider").css("width") == "145px")
+    w2 = 145 * t2 / players[1].getDuration();
+  else 
+    w2 = 500 * t2 / players[1].getDuration();
+
+  $("#seek1-slider .dragger").css("left", w1 + "px"); 
+  $("#seek2-slider .dragger").css("left", w2 + "px"); 
 }
 
 function checkVideoId(id) {
@@ -282,8 +311,14 @@ function reloopExit(p) {
 }
 
 $(document).ready(function() {
-  $("#fader-slider").css("margin-left", "auto");
-  $("#fader-slider").css("margin-right", "auto");
+  $("#fader-slider, #vol1-slider, #vol2-slider, #seek1-slider, #seek2-slider").css("margin-left", "auto");
+  $("#fader-slider, #vol1-slider, #vol2-slider, #seek1-slider, #seek2-slider").css("margin-right", "auto");
+  $("#vol1-slider, #vol2-slider, #seek1-slider, #seek2-slider").css("margin-bottom", "5px");
+  $("#vol1-slider, #vol2-slider").css("margin-top", "8px");
+  $("#vol1-slider, #vol2-slider").css("width", "145px");
+  $("#seek1-slider, #seek2-slider").attr("title", "Seek");
+  $("#vol1-slider, #vol2-slider").attr("title", "Volume");
+  setInterval(updateSeekSliders, 5000);
   var x;
   if (x = localStorage.getItem("ytdjpl_input1"))
     $("#id1").val(x);
@@ -528,5 +563,17 @@ $(document).ready(function() {
 
   $("#cue2").mouseup(function() {
     cueStop(1);
+  });
+
+  $("#seek1").change(function() {
+    players[0].seekTo(players[0].getDuration() * $(this).val() / 200.0);
+    if (!playing[0])
+      setTimeout(hearCurrentTime, 100, 0);
+  });
+
+  $("#seek2").change(function() {
+    players[1].seekTo(players[1].getDuration() * $(this).val() / 200.0);
+    if (!playing[1])
+      setTimeout(hearCurrentTime, 100, 1);
   });
 });

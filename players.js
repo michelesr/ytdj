@@ -30,8 +30,8 @@ function onYouTubeIframeAPIReady() {
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-  player.setVolume("50");
-  player2.setVolume("0");
+  setVolume(1, 50);
+  setVolume(2, 50);
   players[0] = player;
   players[1] = player2;
 }
