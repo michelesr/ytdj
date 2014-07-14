@@ -320,8 +320,7 @@ $(document).ready(function() {
 
   setTimeout(function() {
     if ($(".slider").css("min-height") != "18px" || $(".slider-volume").css("min-height") != "18px") {
-      $("#loud").hmtl("Reloading the page in 5 seconds");
-      $("#loud").fadeIn(500);
+      $("#reload").show();
       setTimeout(function() {window.location.assign(document.location);}, 5000);
     }
   }, 1000);
