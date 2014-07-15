@@ -309,6 +309,26 @@ function reloopExit(p) {
   }
 }
 
+function fixSliderStyle() {
+  if ($(".slider").css("min-height") != "18px" || $(".slider-volume").css("min-height") != "18px") {
+    $(".slider, .slider-volume").css("min-height", "18px");
+    $(".dragger").css("margin-top", "-9px");
+    $(".dragger").css("margin-left", "-9px");
+    $(".track").css("margin-top", "-3px");
+    $(".slider-volume .track").css("margin-top", "-5.5px");
+  }
+}
+
+function checkYoutubeAPI() {
+  if (!player.playVideo || !player2.playVideo) {
+    console.log("Players not ready, retriggering API start");
+    onYouTubeIframeAPIReady();
+    setTimeout(checkYoutubeAPI, 15000);
+  }
+  else 
+    console.log("Players ready");
+}
+
 $(document).ready(function() {
   $("#fader-slider, #vol1-slider, #vol2-slider, #seek1-slider, #seek2-slider").css("margin-left", "auto");
   $("#fader-slider, #vol1-slider, #vol2-slider, #seek1-slider, #seek2-slider").css("margin-right", "auto");
@@ -318,12 +338,8 @@ $(document).ready(function() {
   $("#seek1-slider, #seek2-slider").attr("title", "Seek");
   $("#vol1-slider, #vol2-slider").attr("title", "Volume");
 
-  setTimeout(function() {
-    if ($(".slider").css("min-height") != "18px" || $(".slider-volume").css("min-height") != "18px") {
-      $("#reload").show();
-      setTimeout(function() {window.location.assign(document.location);}, 5000);
-    }
-  }, 1000);
+  setTimeout(fixSliderStyle, 1000);
+  setTimeout(checkYoutubeAPI, 15000);
 
   setInterval(updateSeekSliders, 5000);
   var x;

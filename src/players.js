@@ -1,4 +1,5 @@
 var players = new Array([2])
+var player, player2;
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 
@@ -29,14 +30,11 @@ function onYouTubeIframeAPIReady() {
 }
 
 // 4. The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-  setVolume(1, 50);
-  setVolume(2, 50);
+function onPlayerReady(e) {
+  console.log("Started player");
+  console.log(e);
   players[0] = player;
   players[1] = player2;
+  setVolume(1, 50);
+  setVolume(2, 50);
 }
-
-// 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
-function onPlayerStateChange(event) {}
