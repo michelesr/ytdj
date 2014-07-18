@@ -15,6 +15,7 @@ function searchVideo(name) {
         var s = $(this).attr("id");
         var x = s.substring(6, 7);
         players[selected_player-1].loadVideoById({"videoId":obj.items[x].id.videoId, "suggestedQuality":"small"});
+	$("#id"+selected_player).val(obj.items[x].id.videoId);
         $('html, body').animate({
             scrollTop: $("#num"+selected_player).offset().top
         }, 2000);
