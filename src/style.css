@@ -89,3 +89,16 @@ div {
   margin-left: 5px;
   margin-right: 5px;
 }
+
+#searchDiv div {
+  display:inline-block;
+  max-width:350px;
+  max-width:450px;
+  border: solid 5px #000;
+  margin-bottom: 15px;
+}
+
+img {
+  max-width:320px;
+  max-height:320px;
+}

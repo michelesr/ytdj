@@ -21,7 +21,7 @@ function howToCue() {
 }
 
 function printControls() {
-  alert("Control Keys (while youtube player is unfocused)\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, ALT-left/right: seek forward/back 20 ms, X: hear, ALT-X: set, V: set cue, ALT-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, CTRL-left/right: seek forward/back 20 ms, C: hear, ALT-C: set cue, B: cue, ALT-M: play from cue\n\nOTHER:\nH: hide/show the players");
+  alert("Control Keys\n\nFADER:\nA/S: move left/right, Q: full left (100-0), W: middle (100-100 or 50-50), E: full right (0-100)\n\nTRACK #1:\nN: pause/play, 8: mute/unmute, 9: volume at 50%, 0: volume at 100%, 1: loop in, 2: loop out, 3: exit/reloop, ALT-left/right: seek forward/back 20 ms, X: hear, ALT-X: set, V: set cue, ALT-N: play from cue\n\nTRACK #2:\nM: pause/play, I: mute/unmute, O: volume at 50%, P: volume at 100%, 4: loop in, 5: loop out, 6: exit/reloop, CTRL-left/right: seek forward/back 20 ms, C: hear, ALT-C: set cue, B: cue, ALT-M: play from cue\n\nOTHER:\nH: hide/show the players");
 }
 function onStateChangeHandler1(state) {
   stateChange(1, state);  
@@ -232,7 +232,7 @@ function hidePlayers() {
 
 function showPlayers() {
   $(".players").fadeIn(500); 
-  $("#seek1-slider, #seek2-slider").css("width", "500px");
+  $("#seek1-slider, #seek2-slider").css("width", "300px");
   $("#seek1-slider .dragger").css("left", "0px"); 
   $("#seek2-slider .dragger").css("left", "0px"); 
   updateSeekSliders();
@@ -278,7 +278,7 @@ function startVideo(p) {
   var id = checkVideoId($("#id"+p).val());
   $("#id"+p).val(id);
   localStorage.setItem("ytdjpl_input" + p, id);
-  players[p-1].loadVideoById(id);
+  players[p-1].loadVideoById({"videoId":id, "suggestedQuality":"small"});
 }
 
 function changeVolume(v) {
@@ -597,5 +597,12 @@ $(document).ready(function() {
     players[1].seekTo(players[1].getDuration() * $(this).val() / 200.0);
     if (!playing[1])
       setTimeout(hearCurrentTime, 100, 1);
+  });
+
+  $("#search").keydown(function(k) {
+    var x = k.keyCode? k.keyCode: k.charCode;
+    if(x == 13) {
+      searchVideo($(this).val());
+    }
   });
 });
