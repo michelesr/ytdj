@@ -1,5 +1,5 @@
 var KEY = "AIzaSyCQjzDdNpEFXcz6KZBeX12YGOoS9sLxGLA"; 
-var stored_obj;
+var obj;
 var selected_player = 1;
 
 function searchVideo(name) {
