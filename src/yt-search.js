@@ -3,7 +3,7 @@ var obj;
 var selected_player = 1;
 
 function searchVideo(name) {
-  $.getJSON("https://www.googleapis.com/youtube/v3/search", {q: name, part:"snippet", key : KEY}, function(o) {
+  $.getJSON("https://www.googleapis.com/youtube/v3/search", {type: "video", q: name, part:"snippet", key : KEY}, function(o) {
     obj = o;
     if (obj.items.length > 0) {
       var htmlString = ""
@@ -15,6 +15,9 @@ function searchVideo(name) {
         var s = $(this).attr("id");
         var x = s.substring(6, 7);
         players[selected_player-1].loadVideoById({"videoId":obj.items[x].id.videoId, "suggestedQuality":"small"});
+        $('html, body').animate({
+            scrollTop: $("#num"+selected_player).offset().top
+        }, 2000);
       });
     }
     else
