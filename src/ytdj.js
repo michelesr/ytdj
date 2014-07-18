@@ -232,7 +232,7 @@ function hidePlayers() {
 
 function showPlayers() {
   $(".players").fadeIn(500); 
-  $("#seek1-slider, #seek2-slider").css("width", "300px");
+  $("#seek1-slider, #seek2-slider").css("width", "500px");
   $("#seek1-slider .dragger").css("left", "0px"); 
   $("#seek2-slider .dragger").css("left", "0px"); 
   updateSeekSliders();
