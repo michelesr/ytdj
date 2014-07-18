@@ -35,7 +35,7 @@ div {
 
 .num {
   border-radius: 100%;
-  border: solid 2px #eee;
+  border: 2px solid #eee;
   height: 30px;
   width: 30px;
   font-size: 25px;

@@ -605,4 +605,13 @@ $(document).ready(function() {
       searchVideo($(this).val());
     }
   });
+
+  $("#num1").click(function() {
+    selectPlayer(1);
+  });
+
+  $("#num2").click(function() {
+    selectPlayer(2);
+  });
+
 });
