@@ -338,6 +338,7 @@ $(document).ready(function() {
   $("#seek1-slider, #seek2-slider").attr("title", "Seek");
   $("#vol1-slider, #vol2-slider").attr("title", "Volume");
 
+  selectPlayer(1);
   setTimeout(fixSliderStyle, 1000);
   setTimeout(checkYoutubeAPI, 15000);
 
