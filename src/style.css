@@ -13,6 +13,11 @@ div {
   vertical-align: middle;
 }
 
+img {
+  max-width: 320px;
+  max-height: 320px;
+}
+
 .playerDiv {
   display: inline-block;
   background-color: #ede;
@@ -53,7 +58,7 @@ div {
 .button {
   display: none;
   border-radius: 5px;
-  margin-top:10px;
+  margin-top: 10px;
   margin-bottom:10px;
   color: #fff;
   font-weight: bold;
@@ -63,18 +68,6 @@ div {
   width: 50px;
   background-color: #f00;
   border: 2px solid #fff;
-}
-
-#title {
-  font-family: 'Raleway', helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 40px;
-  color: #fff;
-  background-color:red;
-  border: 5px solid #fff;
-  border-radius: 5%;
-  height:60px;
-  width:400px;
 }
 
 .reloop {
@@ -90,19 +83,26 @@ div {
   margin-right: 5px;
 }
 
+.result {
+  cursor: pointer;
+}
+
+#title {
+  font-family: 'Raleway', helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  color: #fff;
+  background-color: red;
+  border: 5px solid #fff;
+  border-radius: 5%;
+  height: 60px;
+  width: 400px;
+}
+
 #searchDiv div {
   display: inline-block;
   max-width: 350px;
   max-width: 450px;
   border: solid 5px #000;
   margin-bottom: 15px;
-}
-
-img {
-  max-width: 320px;
-  max-height: 320px;
-}
-
-.result {
-  cursor: pointer;
 }
