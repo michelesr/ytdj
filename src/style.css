@@ -91,14 +91,18 @@ div {
 }
 
 #searchDiv div {
-  display:inline-block;
-  max-width:350px;
-  max-width:450px;
+  display: inline-block;
+  max-width: 350px;
+  max-width: 450px;
   border: solid 5px #000;
   margin-bottom: 15px;
 }
 
 img {
-  max-width:320px;
-  max-height:320px;
+  max-width: 320px;
+  max-height: 320px;
+}
+
+.result {
+  cursor: pointer;
 }

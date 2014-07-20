@@ -274,8 +274,9 @@ function checkVideoId(id) {
   return(id);
 }
 
-function startVideo(p) {
-  var id = checkVideoId($("#id"+p).val());
+function startVideo(p, id) {
+  if(!id)
+    var id = checkVideoId($("#id"+p).val());
   $("#id"+p).val(id);
   localStorage.setItem("ytdjpl_input" + p, id);
   players[p-1].loadVideoById({"videoId":id, "suggestedQuality":"small"});
