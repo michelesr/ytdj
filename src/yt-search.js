@@ -22,7 +22,7 @@ function searchVideo(name) {
       });
     }
     else
-      $("#searchDiv").html("<div><div class='result'>No results</div></div>");
+      $("#searchDiv").html("<div><div onClick='hideResults()' class='result'>No results</div></div>");
   });
 }
 
