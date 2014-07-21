@@ -7,7 +7,7 @@ function searchVideo(name) {
   $.getJSON("https://www.googleapis.com/youtube/v3/search", {type: "video", q: name, part:"snippet", key : KEY}, function(o) {
     obj = o;
     if (obj.items.length > 0) {
-      var htmlString = "<div>"
+      var htmlString = "<div><p><a href='javascript:void(0)' onClick='hideResults()'>Hide results</a></p>";
       for (var i = 0; i < obj.items.length; i++) 
         htmlString += "<div>" + "<p><img class='result' id='result" + i + "'src='" 
                    + obj.items[i].snippet.thumbnails.medium.url + "'/>" + "</p><p><b>"
@@ -22,8 +22,12 @@ function searchVideo(name) {
       });
     }
     else
-      $("#searchDiv").html("<div class='result'>No results</div>");
+      $("#searchDiv").html("<div><div class='result'>No results</div></div>");
   });
+}
+
+function hideResults() {
+  $("#searchDiv").html("");
 }
 
 function selectPlayer(x) {
