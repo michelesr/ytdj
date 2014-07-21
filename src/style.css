@@ -21,7 +21,6 @@ img {
 .playerDiv {
   display: inline-block;
   background-color: #ede;
-  min-width: max-content;
 }
 
 .footer {
@@ -97,6 +96,7 @@ img {
   border-radius: 5%;
   height: 60px;
   width: 400px;
+  margin-bottom: 16px;
 }
 
 #searchDiv div {
