@@ -7,13 +7,13 @@ function searchVideo(name) {
   $.getJSON("https://www.googleapis.com/youtube/v3/search", {type: "video", q: name, part:"snippet", key : KEY}, function(o) {
     obj = o;
     if (obj.items.length > 0) {
-      var htmlString = ""
+      var htmlString = "<div>"
       for (var i = 0; i < obj.items.length; i++) 
         htmlString += "<div>" + "<p><img class='result' id='result" + i + "'src='" 
                    + obj.items[i].snippet.thumbnails.medium.url + "'/>" + "</p><p><b>"
                    + obj.items[i].snippet.title + "</b></p><p>" 
                    + obj.items[i].snippet.description + "</div>";
-      $("#searchDiv").html(htmlString);
+      $("#searchDiv").html(htmlString + "</div>");
       $(".result").click(function() {
         var s = $(this).attr("id");
         var x = s.substring(6, 7);

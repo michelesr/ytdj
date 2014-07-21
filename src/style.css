@@ -99,7 +99,7 @@ img {
   margin-bottom: 16px;
 }
 
-#searchDiv div {
+#searchDiv div div {
   display: inline-block;
   max-width: 350px;
   max-width: 450px;
