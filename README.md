@@ -1,11 +1,13 @@
 ytdj
 ====
 
+![SS](ss.png)
+
 DJ with Youtube Players!
 
-How to: you will se two pairs of textbox and button, in order to start a video you must provide the video ID (for example https://www.youtube.com/watch?v=An2a1_Do_fc has An2a1_Do_fc as ID) and click "Load" to start the video. NEW: you can also provide URL now instead of ID, the software will try to parse it and get the id. 
+How to: you will se two pairs of textbox and button, in order to start a video you must provide the video ID (for example https://www.youtube.com/watch?v=An2a1_Do_fc has An2a1_Do_fc as ID) and click "Load" to start the video. NEW: you can also provide URL now instead of ID, the software will try to parse it and get the id.
 
-Use the fader to mix audio! You can set local volume for a video using the control that i provided (please don't use youtube volume control).  
+Use the fader to mix audio! You can set local volume for a video using the control that i provided (please don't use youtube volume control).
 There's 2 fader mode: 50-50 and 100-100, that are related to the crossfading mode, and they indicate the value of the volumes when the mixer is on the middle position.
 
 To loop a video, press the loop in key to get initial time, loop out to take final time and start the loop, exit to finish the loop, reloop to retrigger the same loop. The loop won't start if final time is lower than start time.
