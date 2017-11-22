@@ -1,17 +1,21 @@
 // you need a valid youtube api key to use the search functions
-var KEY = "AIzaSyCQjzDdNpEFXcz6KZBeX12YGOoS9sLxGLA"; 
+var KEY = false
 var obj;
 var activePlayer = 1;
 
 function searchVideo(name) {
+  if(!KEY) {
+    alert("You need a Youtube API key to use the search functionality")
+    return
+  }
   $.getJSON("https://www.googleapis.com/youtube/v3/search", {type: "video", q: name, part:"snippet", key : KEY}, function(o) {
     obj = o;
     if (obj.items.length > 0) {
       var htmlString = "<div><p><a href='javascript:void(0)' onClick='hideResults()'>Hide results</a></p>";
-      for (var i = 0; i < obj.items.length; i++) 
-        htmlString += "<div>" + "<p><img class='result' id='result" + i + "'src='" 
+      for (var i = 0; i < obj.items.length; i++)
+        htmlString += "<div>" + "<p><img class='result' id='result" + i + "'src='"
                    + obj.items[i].snippet.thumbnails.medium.url + "'/>" + "</p><p><b>"
-                   + obj.items[i].snippet.title + "</b></p><p>" 
+                   + obj.items[i].snippet.title + "</b></p><p>"
                    + obj.items[i].snippet.description + "</div>";
       $("#searchDiv").html(htmlString + "</div>");
       $(".result").click(function() {
