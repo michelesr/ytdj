@@ -15,9 +15,14 @@ to parse it and get the `id`.
 
 ### Search
 
-Now you can use the search to find videos and load them on the selected
+This feature is disabled because it requires a valid 
+[Google API key](https://support.google.com/cloud/answer/6158862?hl=en). If you
+really want to use it you can download the source code and replace the key
+in `src/yt-search.js` with your own key.
+
+~~Now you can use the search to find videos and load them on the selected
 player by clicking on the result box. To select the target player click on its
-number.
+number.~~
 
 ### Mixing
 
